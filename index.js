@@ -55,6 +55,34 @@ const {passwordHash, ...userData} = user._doc
 }
 })
 
+app.post ("/auth/login", async(req, res)=> {
+  try {
+    const user = await UserModel.findOne({email: req.body.email})
+    if (!user){
+      return res.status(404).json({message: "User not found"})
+    }
+    const isValidPassword = await bcrypt.compare(req.body.password, user._doc.passwordHash)
+
+    if (!isValidPassword) {
+      return res.status(400).json({message: "Wrong email or password"})
+    }
+    const token = jwt.sign({
+      _id: user._id
+    }, "secretkey",{
+      expiresIn: "20min"
+    })  
+  const {passwordHash, ...userData} = user._doc
+    res.json({
+      ...userData,
+      token
+    })
+
+  } catch (error) {
+    console.log(err)
+    res.status(500)
+    res.json({message: "Authorization error"})
+  }
+})
 app.listen(8000, (err) => {
   if (err) {
     console.log("Server error")
