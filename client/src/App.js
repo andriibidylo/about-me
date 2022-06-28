@@ -1,15 +1,20 @@
 
 import Container from "@mui/material/Container"
-import { Home } from "./pages/Home"
-import {Header} from "./components/Header"
+
+import { Header } from "./components";
+import { Home, PostDetails, Registration, AddPost, Login } from "./pages";
 
 
 const App = () => {
   return (
     <>
-    <Header/>
+      <Header />
       <Container maxWidth="lg">
-      <Home />
+        <Home />
+        {/* <PostDetails /> */}
+        {/* <AddPost /> */}
+        {/* <Login /> */}
+        {/* <Registration /> */}
       </Container>
     </>
   );
