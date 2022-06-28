@@ -68,3 +68,74 @@ export const createPost = async (req, res) => {
     res.json({ message: "Post did not create" })
   }
 }
+export const removePost = async (req, res) => {
+
+    try {
+      const postId = req.params.id;
+  
+      PostModel.findOneAndDelete(
+        {
+          _id: postId,
+        },
+        (err, doc) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({
+              message: 'Post did not delete',
+            });
+          }
+  
+          if (!doc) {
+            return res.status(404).json({
+              message: 'Post not found',
+            });
+          }
+  
+          res.json({
+            success: true,
+          });
+        },
+      );
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: 'Post did not get',
+      });
+    }
+}
+updatePost
+export const updatePost = async (req, res) => {
+
+  try {
+    const postId = req.params.id;
+
+    PostModel.findOneAndDelete(
+      {
+        _id: postId,
+      },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: 'Post did not delete',
+          });
+        }
+
+        if (!doc) {
+          return res.status(404).json({
+            message: 'Post not found',
+          });
+        }
+
+        res.json({
+          success: true,
+        });
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Post did not get',
+    });
+  }
+}

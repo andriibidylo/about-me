@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 import checkAuth from "./utils/checkAuth.js"
 import {register, login, getMe} from "./controllers/UserController.js"
 import {createPostValidation} from "./validations/post.js"
-import {createPost, getAllPosts, getOnePost} from "./controllers/PostController.js"
+import {createPost, getAllPosts, getOnePost, removePost, updatePost} from "./controllers/PostController.js"
 
 
 const app = express()
@@ -24,8 +24,8 @@ app.get("/auth/me",checkAuth, getMe)
 app.get("/posts", getAllPosts)
 app.get("/posts/:id", getOnePost)
 app.post("/posts",checkAuth, createPostValidation, createPost)
-// app.delete("/posts/", removePost)
-// app.patch("/posts/", updatePost)
+app.delete("/posts/",checkAuth, removePost)
+app.patch("/posts/",checkAuth, updatePost)
 
 
 
