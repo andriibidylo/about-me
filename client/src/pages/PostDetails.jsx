@@ -4,7 +4,7 @@ import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 
-export const FullPost = () => {
+export const PostDetails = () => {
   return (
     <>
       <Post
