@@ -1,5 +1,5 @@
 import express, { json } from "express"
-import { registerValidation } from "./validations/auth.js"
+import { registerValidation, loginValidation} from "./validations/auth.js"
 import mongoose from "mongoose"
 import checkAuth from "./utils/checkAuth.js"
 import {register, login, getMe} from "./controllers/UserController.js"
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 })
 app.post("/auth/register", registerValidation, register)
 
-app.post("/auth/login", login )
+app.post("/auth/login", loginValidation, login )
 
 app.get("/auth/me",checkAuth, getMe)
 app.listen(8000, (err) => {
