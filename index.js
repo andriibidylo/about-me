@@ -2,7 +2,7 @@ import express, { json } from "express"
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
 import {validationResult} from "express-validator"
-import {registerValidation} from "./validations/auth"
+import {registerValidation} from "./validations/auth.js"
 
 
 
@@ -17,12 +17,19 @@ app.use(express.json())
 app.get("/",(req, res)=> {
   res.send("Hello")
 })
-app.post("/auth/login",registerValidation,(req, res)=> {
+app.post("/auth/register",registerValidation,(req, res)=> {
+const errors = validationResult(req)
+if (!errors.isEmpty()){
+  return res.status(400).json(errors.array())
+}
 
- const token = jwt.sign({
-   email: req.body.email,
-   fullName: req.body.name
- }, "secretkey") 
+res.json({
+  success: true,
+})
+//  const token = jwt.sign({
+//    email: req.body.email,
+//    fullName: req.body.name
+//  }, "secretkey") 
 })
 
 app.listen(8000, (err)=>{
