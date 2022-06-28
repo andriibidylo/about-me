@@ -103,39 +103,30 @@ export const removePost = async (req, res) => {
       });
     }
 }
-updatePost
 export const updatePost = async (req, res) => {
-
   try {
     const postId = req.params.id;
 
-    PostModel.findOneAndDelete(
+    await PostModel.updateOne(
       {
         _id: postId,
       },
-      (err, doc) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            message: 'Post did not delete',
-          });
-        }
-
-        if (!doc) {
-          return res.status(404).json({
-            message: 'Post not found',
-          });
-        }
-
-        res.json({
-          success: true,
-        });
+      {
+        title: req.body.title,
+        text: req.body.text,
+        imageUrl: req.body.imageUrl,
+        author: req.userId,
+        tags: req.body.tags.split(','),
       },
     );
+
+    res.json({
+      success: true,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Post did not get',
+      message: 'Post did not update',
     });
   }
 }
