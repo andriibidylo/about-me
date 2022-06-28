@@ -1,38 +1,61 @@
 import express, { json } from "express"
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
-import {validationResult} from "express-validator"
-import {registerValidation} from "./validations/auth.js"
-
-
+import { validationResult } from "express-validator"
+import { registerValidation } from "./validations/auth.js"
+import UserModel from "./models/User.js"
+import bcrypt from 'bcrypt'
 
 const app = express()
 
 mongoose.connect("mongodb+srv://Andrew:CaFMA3g6N8mFmgPo@cluster0.kjby4.mongodb.net/?retryWrites=true&w=majority")
-.then(console.log("DB connected"))
-.catch((err)=> console.log("DB error"+err))
+  .then(console.log("DB connected"))
+  .catch((err) => console.log("DB error" + err))
 
 app.use(express.json())
 
-app.get("/",(req, res)=> {
+app.get("/", (req, res) => {
   res.send("Hello")
 })
-app.post("/auth/register",registerValidation,(req, res)=> {
-const errors = validationResult(req)
-if (!errors.isEmpty()){
-  return res.status(400).json(errors.array())
+app.post("/auth/register", registerValidation, async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.array())
+  } 
+  try {
+  const password = req.body.password;
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+
+
+
+  const doc = new UserModel({
+    email: req.body.email,
+    fullName: req.body.fullName,
+    avatarUrl: req.body.avatarUrl,
+    passwordHash: hash,
+  });
+  const user = await doc.save();
+  
+  const token = jwt.sign({
+    _id: user._id
+  }, "secretkey",{
+    expiresIn: "20min"
+  })  
+const {passwordHash, ...userData} = user._doc
+  res.json({
+    ...userData,
+    token
+  })
+
+}catch(err){
+  console.log(err)
+      res.status(500)
+      res.json({message: "We could not register you"})
 }
-
-res.json({
-  success: true,
-})
-//  const token = jwt.sign({
-//    email: req.body.email,
-//    fullName: req.body.name
-//  }, "secretkey") 
 })
 
-app.listen(8000, (err)=>{
+app.listen(8000, (err) => {
   if (err) {
     console.log("Server error")
   }
