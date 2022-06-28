@@ -26,10 +26,13 @@ export const register = async (req, res) => {
     });
     const user = await doc.save();
 
-    const token = jwt.sign({
+    const token = jwt.sign(
+      {
       _id: user._id
-    }, "secretkey", {
-      expiresIn: "20min"
+    }, 
+    "secretkey", 
+    {
+      expiresIn: "1h"
     })
     const { passwordHash, ...userData } = user._doc
     res.json({
@@ -50,21 +53,26 @@ export const login  = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" })
     }
-    const isValidPassword = await bcrypt.compare(req.body.password, user._doc.passwordHash)
+    const isValidPassword = await bcrypt.compare(req.body.password, user._doc.passwordHash);
 
     if (!isValidPassword) {
       return res.status(400).json({ message: "Wrong email or password" })
     }
-    const token = jwt.sign({
-      _id: user._id
-    }, "secretkey", {
-      expiresIn: "20min"
-    })
+    const token = jwt.sign(
+      {
+        _id: user._id,
+      },
+      'secretkey',
+      {
+        expiresIn: '30d',
+      },
+    );
     const { passwordHash, ...userData } = user._doc
     res.json({
       ...userData,
-      token
-    })
+      token,
+    },
+    )
 
   } catch (error) {
     console.log(err)
@@ -80,9 +88,7 @@ export const getMe = async (req, res) => {
       return res.status(404).json({ message: "User not found" })
     }
     const { passwordHash, ...userData } = user._doc
-    res.json({
-      ...userData
-    })
+    res.json(userData)
   } catch (error) {
     console.log(err)
     res.status(404)

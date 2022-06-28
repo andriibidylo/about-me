@@ -1,9 +1,17 @@
-import jwt from "jsonwebtoken"
-import { validationResult } from "express-validator"
 import PostModel from "../models/Post.js"
 
+export const getAllPosts = async (req, res) => {
+  try {
+    const post = await PostModel.find()
+    res.json(post)
 
-export const create = async (req, res) => {
+  } catch (error) {
+    console.log(error)
+    res.status(500)
+    res.json({ message: "Could not show all posts" })
+  }
+}
+export const createPost = async (req, res) => {
   try {
     const doc = new PostModel ({
       title: req.body.title,
@@ -14,6 +22,7 @@ export const create = async (req, res) => {
     })
     const post = await doc.save()
     res.json(post)
+
   } catch (error) {
     console.log(error)
     res.status(500)
