@@ -6,7 +6,7 @@ import { register, login, getMe } from "./controllers/UserController.js"
 import { createPostValidation } from "./validations/post.js"
 import { createPost, getAllPosts, getOnePost, removePost, updatePost } from "./controllers/PostController.js"
 import multer from "multer"
-
+import handleValidationErrors from "./utils/handleValidationErrors.js"
 const app = express()
 
 const storage = multer.diskStorage({
@@ -23,6 +23,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.use('/uploads', express.static('uploads'));
+
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
@@ -38,14 +40,14 @@ app.use(express.json())
 app.get("/", (req, res) => {
   res.send("Hello")
 })
-app.post("/auth/register", registerValidation, register)
-app.post("/auth/login", loginValidation, login)
+app.post("/auth/register", registerValidation, handleValidationErrors, register)
+app.post("/auth/login", loginValidation, handleValidationErrors, login)
 app.get("/auth/me", checkAuth, getMe)
 
 app.get("/posts", getAllPosts)
 app.get("/posts/:id", getOnePost)
 app.post("/posts", checkAuth, createPostValidation, createPost)
-app.patch("/posts/", checkAuth, updatePost)
+app.patch("/posts/", checkAuth, createPostValidation, updatePost)
 app.delete("/posts/", checkAuth, removePost)
 
 
