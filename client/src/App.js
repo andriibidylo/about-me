@@ -10,14 +10,13 @@ const App = () => {
     <>
       <Header />
       <Container maxWidth="lg">
-      <Routes>
-      <Route path="/" element={ <Home />}/>
-      <Route path="/posts:id" element={ <PostDetails />}/>
-      <Route path="/add-post" element={ <AddPost />}/>
-      <Route path="/login" element={ <Login />}/>
-      <Route path="/registration" element={ <Registration />}/>
-
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/posts/:id" element={<PostDetails />} />
+          <Route path="/add-post" element={<AddPost />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+        </Routes>
       </Container>
     </>
   );
