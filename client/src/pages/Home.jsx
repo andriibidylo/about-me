@@ -6,13 +6,11 @@ import axios from "../axios"
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts } from '../redux/posts/slice'
+import { fetchPosts,fetchTags } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 export const Home = () => {
-
-
 
   const dispatch = useDispatch()
   const { posts, tags } = useSelector(state => state.posts)
@@ -22,6 +20,7 @@ export const Home = () => {
 
     try {
       dispatch(fetchPosts())
+      dispatch(fetchTags())
     } catch (error) {
       console.log(error)
     }
@@ -42,22 +41,18 @@ export const Home = () => {
               id={post._id}
               title={post.title}
               imageUrl={post.imageUrl}
-              user={{
-                avatarUrl:
-                  'https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png',
-                fullName: 'Keff',
-              }}
-              createdAt={'12 June 2022'}
-              viewsCount={150}
-              commentsCount={3}
-              tags={['react', 'fun', 'typescript']}
+              user={post.author}
+              createdAt={post.createdAt}
+              viewsCount={post.viewsCount}
+              commentsCount={post.commentsCount}
+              tags={post.tags}
               isEditable
               isLoading={false}
             />
             ))}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'redux']} isLoading={false} />
+        {isStatusLoading ?  (<TagsBlock isLoading={true} />) : (<TagsBlock items={tags} isLoading={false} />) } 
           <CommentsBlock
             items={[
               {
