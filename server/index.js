@@ -7,7 +7,10 @@ import { createPostValidation } from "./validations/post.js"
 import { createPost, getAllPosts, getOnePost, removePost, updatePost } from "./controllers/PostController.js"
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
+import cors from "cors"
+
 const app = express()
+
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
@@ -23,6 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.use(cors())
 app.use('/uploads', express.static('uploads'));
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
