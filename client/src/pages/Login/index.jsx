@@ -26,15 +26,24 @@ export const Login = () => {
 
 
   // Send axios request with email and password 
-  const onSubmit = (value) => {
-    dispatch(fetchAuthData(value))
+  const onSubmit = async (value) => {
+    const data = await dispatch(fetchAuthData(value))
+
+  // Set token to localStorage
+    if (!data.payload) {
+      return alert("Please authorize")
+    }
+    if ("token" in data.payload){
+      window.localStorage.setItem("token", data.payload.token)
+    }
   }
 
   // If user authorized navigate them to Home page
   if (Boolean(data)) {
-    localStorage.setItem("data", data)
     return <Navigate to="/" />;
   }
+
+
 
   return (
     <Paper classes={{ root: styles.root }}>
