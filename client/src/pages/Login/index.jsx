@@ -8,8 +8,8 @@ import styles from "./Login.module.scss";
 import { fetchAuthData } from "../../redux/auth/slice"
 import { useForm } from "react-hook-form"
 import { Navigate } from "react-router";
-import {selectAuth} from "../../redux/auth/selectors"
-
+import { selectAuth } from "../../redux/auth/selectors"
+import { logout } from "../../redux/auth/slice";
 
 export const Login = () => {
 
@@ -24,14 +24,16 @@ export const Login = () => {
   })
   const dispatch = useDispatch()
 
+
   // Send axios request with email and password 
   const onSubmit = (value) => {
     dispatch(fetchAuthData(value))
   }
 
   // If user authorized navigate them to Home page
-  if(Boolean(data)){
-    return <Navigate to="/"/>;
+  if (Boolean(data)) {
+    localStorage.setItem("data", data)
+    return <Navigate to="/" />;
   }
 
   return (
@@ -40,26 +42,26 @@ export const Login = () => {
         Log in
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        className={styles.field}
-        label="E-Mail"
-        error={Boolean(errors.email?.message)}
-        helperText={errors.email?.message}
-        fullWidth
-        type="email"
-        {...register("email", {required: "Please enter an email"})}
+        <TextField
+          className={styles.field}
+          label="E-Mail"
+          error={Boolean(errors.email?.message)}
+          helperText={errors.email?.message}
+          fullWidth
+          type="email"
+          {...register("email", { required: "Please enter an email" })}
 
-      />
-      <TextField
-        className={styles.field}
-        error={Boolean(errors.password?.message)}
-        helperText={errors.password?.message}
-        label="Password"
-        {...register("password", {required: "Please enter a password"})}
-        fullWidth />
-      <Button size="large" variant="contained" type="submit" fullWidth>
-        Log out
-      </Button>
+        />
+        <TextField
+          className={styles.field}
+          error={Boolean(errors.password?.message)}
+          helperText={errors.password?.message}
+          label="Password"
+          {...register("password", { required: "Please enter a password" })}
+          fullWidth />
+        <Button size="large" variant="contained" type="submit" fullWidth>
+          Log in
+        </Button>
       </form>
     </Paper>
   );

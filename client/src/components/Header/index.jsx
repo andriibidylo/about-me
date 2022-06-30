@@ -3,11 +3,19 @@ import Button from '@mui/material/Button';
 import { Link } from "react-router-dom"
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
+import {selectAuth} from "../../redux/auth/selectors"
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from "../../redux/auth/slice";
+
 
 export const Header = () => {
-  const isAuth = false;
 
-  const onClickLogout = () => {};
+  const { data } = useSelector(selectAuth)
+  const dispatch = useDispatch()
+  const isAuth = Boolean(data)
+  const onClickLogout = () => {
+    dispatch(logout())
+  };
 
   return (
     <div className={styles.root}>
@@ -32,7 +40,7 @@ export const Header = () => {
                   <Button variant="outlined">Log in</Button>
                 </Link>
                 <Link to="/registration">
-                  <Button variant="contained">Create an account</Button>
+                  <Button onClick={()=>dispatch(logout())}  variant="contained">Create an account</Button>
                 </Link>
               </>
             )}
