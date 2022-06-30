@@ -15,7 +15,6 @@ export const getAllPosts = async (req, res) => {
 export const getOnePost = async (req, res) => {
   try {
     const postId = req.params.id;
-
     PostModel.findOneAndUpdate(
       {
         _id: postId,
@@ -42,7 +41,7 @@ export const getOnePost = async (req, res) => {
 
         res.json(doc);
       },
-    ).populate('user');
+    ).populate('author');
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -130,12 +129,26 @@ export const updatePost = async (req, res) => {
     });
   }
 }
-
 export const getTags = async (req, res) => {
   try {
-    const post = await PostModel.find().limit(10).exec()
+    const post = await PostModel.find().limit(5).exec()
 
     const tags = post.map((obj) => obj.tags).flat().slice(0, 5)
+
+    res.json(tags)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Tags did not get',
+    });
+  }
+}
+
+export const getLastComments = async (req, res) => {
+  try {
+    const post = await PostModel.find().limit(5).exec()
+
+    const tags = post.map((obj) => obj.comments).flat().slice(0, 5)
 
     res.json(tags)
   } catch (err) {

@@ -41,9 +41,6 @@ mongoose.connect("mongodb+srv://Andrew:CaFMA3g6N8mFmgPo@cluster0.kjby4.mongodb.n
 
 app.use(express.json())
 
-app.get("/", (req, res) => {
-  res.send("Hello")
-})
 app.post("/auth/register", registerValidation, handleValidationErrors, register)
 app.post("/auth/login", loginValidation, handleValidationErrors, login)
 app.get("/auth/me", checkAuth, getMe)

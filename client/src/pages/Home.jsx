@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts,fetchTags } from '../redux/posts/slice'
+import { fetchPosts, fetchTags } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { fabClasses } from '@mui/material';
 
@@ -27,7 +27,7 @@ export const Home = () => {
     }
   }, [])
 
-  console.log("isTagsLoading",isTagsLoading)
+  console.log("isTagsLoading", isTagsLoading)
 
   return (
     <>
@@ -55,7 +55,7 @@ export const Home = () => {
             ))}
         </Grid>
         <Grid xs={4} item>
-       {isTagsLoading ? (<TagsBlock isLoading={true}/>) : (<TagsBlock items={tags.items} isLoading={false}/>)}
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={[
               {

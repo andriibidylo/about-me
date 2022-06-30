@@ -11,7 +11,7 @@ import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 
 export const Post = ({
-  _id,
+  id,
   title,
   createdAt,
   imageUrl,
@@ -20,7 +20,7 @@ export const Post = ({
   commentsCount,
   tags,
   children,
-  isFullPost,
+  isPostDetails,
   isLoading,
   isEditable,
 }) => {
@@ -31,10 +31,10 @@ export const Post = ({
   const onClickRemove = () => {};
 
   return (
-    <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
+    <div className={clsx(styles.root, { [styles.rootFull]: isPostDetails })}>
       {isEditable && (
         <div className={styles.editButtons}>
-          <Link to={`/posts/${_id}/edit`}>
+          <Link to={`/posts/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
@@ -46,7 +46,7 @@ export const Post = ({
       )}
       {imageUrl && (
         <img
-          className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+          className={clsx(styles.image, { [styles.imageFull]: isPostDetails })}
           src={imageUrl}
           alt={title}
         />
@@ -54,8 +54,8 @@ export const Post = ({
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
         <div className={styles.indention}>
-          <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
-            {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
+          <h2 className={clsx(styles.title, { [styles.titleFull]: isPostDetails })}>
+            {isPostDetails ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
           <ul className={styles.tags}>
             {tags.map((name) => (
