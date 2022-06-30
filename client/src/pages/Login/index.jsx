@@ -5,23 +5,34 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from 'react-redux'
 import styles from "./Login.module.scss";
-import { fetchUserData } from "../../redux/auth/slice"
+import { fetchAuthData } from "../../redux/auth/slice"
 import { useForm } from "react-hook-form"
+import { Navigate } from "react-router";
+import {selectAuth} from "../../redux/auth/selectors"
+
 
 export const Login = () => {
+
+  const { data } = useSelector(selectAuth)
 
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
     defaultValues: {
       email: "",
       password: ""
-    }
+    },
+    mode: "onChange"
   })
+  const dispatch = useDispatch()
 
+  // Send axios request with email and password 
   const onSubmit = (value) => {
-    dispatch(fetchUserData(value))
+    dispatch(fetchAuthData(value))
   }
 
-  const dispatch = useDispatch()
+  // If user authorized navigate them to Home page
+  if(Boolean(data)){
+    return <Navigate to="/"/>;
+  }
 
   return (
     <Paper classes={{ root: styles.root }}>
