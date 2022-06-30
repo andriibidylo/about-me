@@ -15,6 +15,7 @@ export const Header = () => {
   const isAuth = Boolean(data)
   const onClickLogout = () => {
     dispatch(logout())
+    window.localStorage.removeItem("token")
   };
 
   return (

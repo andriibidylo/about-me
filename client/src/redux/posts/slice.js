@@ -14,6 +14,7 @@ export const fetchTags = createAsyncThunk(
   }
 )
 
+
 const initialState = {
   posts: {
     items: [],
