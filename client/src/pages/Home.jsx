@@ -14,11 +14,12 @@ export const Home = () => {
 
   const dispatch = useDispatch()
   const { posts, tags } = useSelector(state => state.posts)
+  const { data } = useSelector(state => state.auth)
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
 
+  console.log("data", data)
   useEffect(() => {
-
     try {
       dispatch(fetchPosts())
       dispatch(fetchTags())
@@ -27,7 +28,6 @@ export const Home = () => {
     }
   }, [])
 
-  console.log("isTagsLoading", isTagsLoading)
 
   return (
     <>
@@ -49,7 +49,7 @@ export const Home = () => {
               viewsCount={post.viewsCount}
               commentsCount={post.commentsCount}
               tags={post.tags}
-              isEditable
+              isAuthor={data?._id === post.author._id}
               isLoading={false}
             />
             ))}

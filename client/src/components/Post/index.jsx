@@ -22,7 +22,7 @@ export const Post = ({
   children,
   isPostDetails,
   isLoading,
-  isEditable,
+  isAuthor,
 }) => {
   if (isLoading) {
     return <PostSkeleton />;
@@ -32,7 +32,7 @@ export const Post = ({
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isPostDetails })}>
-      {isEditable && (
+      {isAuthor && (
         <div className={styles.editButtons}>
           <Link to={`/posts/${id}/edit`}>
             <IconButton color="primary">

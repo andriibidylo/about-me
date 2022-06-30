@@ -28,12 +28,12 @@ export const Login = () => {
   // Send axios request with email and password 
   const onSubmit = async (value) => {
     const data = await dispatch(fetchAuthData(value))
-console.log(data)
-  // Set token to localStorage
+    console.log(data)
+    // Set token to localStorage
     if (!data.payload) {
       return alert("Please authorize")
     }
-    if ("token" in data.payload){
+    if ("token" in data.payload) {
       window.localStorage.setItem("token", data.payload.token)
     }
   }
@@ -42,8 +42,6 @@ console.log(data)
   if (Boolean(data)) {
     return <Navigate to="/" />;
   }
-
-
 
   return (
     <Paper classes={{ root: styles.root }}>

@@ -25,12 +25,11 @@ const initialState = {
   status: "loading",
 }
 
-
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout:(state)=>{
+    logout: (state) => {
       state.data = null
     }
   },
