@@ -23,8 +23,6 @@ const initialState = {
     items: [],
     status: "loading"
   },
-  viewsCount: 0,
-  commentsCount: 0
 }
 
 
@@ -61,6 +59,6 @@ export const postsSlice = createSlice({
 
 })
 
-export const {} = postsSlice.actions
+export const { } = postsSlice.actions
 
 export default postsSlice.reducer
