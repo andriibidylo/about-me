@@ -52,7 +52,7 @@ export const getOnePost = async (req, res) => {
 }
 export const createPost = async (req, res) => {
   try {
-    const doc = new PostModel ({
+    const doc = new PostModel({
       title: req.body.title,
       text: req.body.text,
       tags: req.body.tags,
@@ -70,38 +70,38 @@ export const createPost = async (req, res) => {
 }
 export const removePost = async (req, res) => {
 
-    try {
-      const postId = req.params.id;
-  
-      PostModel.findOneAndDelete(
-        {
-          _id: postId,
-        },
-        (err, doc) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).json({
-              message: 'Post did not delete',
-            });
-          }
-  
-          if (!doc) {
-            return res.status(404).json({
-              message: 'Post not found',
-            });
-          }
-  
-          res.json({
-            success: true,
+  try {
+    const postId = req.params.id;
+
+    PostModel.findOneAndDelete(
+      {
+        _id: postId,
+      },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: 'Post did not delete',
           });
-        },
-      );
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({
-        message: 'Post did not get',
-      });
-    }
+        }
+
+        if (!doc) {
+          return res.status(404).json({
+            message: 'Post not found',
+          });
+        }
+
+        res.json({
+          success: true,
+        });
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Post did not get',
+    });
+  }
 }
 export const updatePost = async (req, res) => {
   try {
@@ -127,6 +127,21 @@ export const updatePost = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: 'Post did not update',
+    });
+  }
+}
+
+export const getTags = async (req, res) => {
+  try {
+    const post = await PostModel.find().limit(10).exec()
+
+    const tags = post.map((obj) => obj.tags).flat().slice(0, 5)
+
+    res.json(tags)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Tags did not get',
     });
   }
 }

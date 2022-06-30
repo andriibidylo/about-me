@@ -16,11 +16,11 @@ export const fetchTags = createAsyncThunk(
 
 const initialState = {
   posts: {
-    itmes: [],
+    items: [],
     status: "loading"
   },
   tags: {
-    itmes: [],
+    items: [],
     status: "loading"
   },
   viewsCount: 0,
@@ -44,6 +44,18 @@ export const postsSlice = createSlice({
     [fetchPosts.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
+    },
+    [fetchTags.pending]: (state) => {
+      state.tags.status = "loading"
+      state.tags.items = []
+    },
+    [fetchTags.fulfilled]: (state, action) => {
+      state.tags.items = action.payload
+      state.tags.status = "success"
+    },
+    [fetchTags.rejected]: (state) => {
+      state.tags.status = "error"
+      state.tags.items = []
     },
   },
 

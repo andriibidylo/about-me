@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
-import axios from "../axios"
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts,fetchTags } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
+import { fabClasses } from '@mui/material';
 
 
 export const Home = () => {
 
   const dispatch = useDispatch()
   const { posts, tags } = useSelector(state => state.posts)
-  const isStatusLoading = posts.status === "loading"
+  const isPostsLoading = posts.status === "loading"
+  const isTagsLoading = tags.status === "loading"
 
   useEffect(() => {
 
@@ -26,6 +27,8 @@ export const Home = () => {
     }
   }, [])
 
+  console.log("isTagsLoading",isTagsLoading)
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
@@ -34,7 +37,7 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isStatusLoading ? [...Array(5)] : posts.items).map((post, index) => isStatusLoading ?
+          {(isPostsLoading ? [...Array(5)] : posts.items).map((post, index) => isPostsLoading ?
             (<Post key={index} isLoading={true} />) :
             (<Post
               key={post._id}
@@ -52,7 +55,7 @@ export const Home = () => {
             ))}
         </Grid>
         <Grid xs={4} item>
-        {isStatusLoading ?  (<TagsBlock isLoading={true} />) : (<TagsBlock items={tags} isLoading={false} />) } 
+       {isTagsLoading ? (<TagsBlock isLoading={true}/>) : (<TagsBlock items={tags.items} isLoading={false}/>)}
           <CommentsBlock
             items={[
               {
