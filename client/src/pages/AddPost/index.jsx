@@ -15,8 +15,10 @@ export const AddPost = () => {
   const { data } = useSelector(selectAuth)
   
 
-  const imageUrl = '';
-  const [value, setValue] = useState('');
+  const imageUrl = "";
+  const [value, setValue] = useState("");
+  const [title, setTitle] = useState("")
+  const [tags, setTags] = useState("")
 
   const handleChangeFile = () => {};
 
@@ -42,7 +44,7 @@ export const AddPost = () => {
   );
 
 
-  if (!Boolean(data)){
+  if (!window.localStorage.getItem("token") && !Boolean(data)){
     return <Navigate to="/" />;
   }
 
@@ -67,8 +69,11 @@ export const AddPost = () => {
         variant="standard"
         placeholder="Title"
         fullWidth
+        value={title}
+        onChange={(e)=> setTitle(e.target.value)}
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Tags" fullWidth />
+      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Tags" value={tags}
+        onChange={(e)=> setTags(e.target.value)} fullWidth />
       <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
