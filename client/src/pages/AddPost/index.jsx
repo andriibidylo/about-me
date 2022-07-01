@@ -1,25 +1,32 @@
-import React from 'react';
+import React,{useState,useCallback,useMemo} from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { Navigate } from "react-router";
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
+import { selectAuth } from "../../redux/auth/selectors"
 
 export const AddPost = () => {
+
+
+  const { data } = useSelector(selectAuth)
+  
+
   const imageUrl = '';
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState('');
 
   const handleChangeFile = () => {};
 
   const onClickRemoveImage = () => {};
 
-  const onChange = React.useCallback((value) => {
+  const onChange = useCallback((value) => {
     setValue(value);
   }, []);
 
-  const options = React.useMemo(
+  const options = useMemo(
     () => ({
       spellChecker: false,
       maxHeight: '400px',
@@ -33,6 +40,11 @@ export const AddPost = () => {
     }),
     [],
   );
+
+
+  if (!Boolean(data)){
+    return <Navigate to="/" />;
+  }
 
   return (
     <Paper style={{ padding: 30 }}>

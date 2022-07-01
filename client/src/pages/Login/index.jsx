@@ -9,13 +9,12 @@ import { fetchAuthData } from "../../redux/auth/slice"
 import { useForm } from "react-hook-form"
 import { Navigate } from "react-router";
 import { selectAuth } from "../../redux/auth/selectors"
-import { logout } from "../../redux/auth/slice";
 
 export const Login = () => {
 
   const { data } = useSelector(selectAuth)
 
-  const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
       password: ""
@@ -28,7 +27,7 @@ export const Login = () => {
   // Send axios request with email and password 
   const onSubmit = async (value) => {
     const data = await dispatch(fetchAuthData(value))
-    console.log(data)
+  
     // Set token to localStorage
     if (!data.payload) {
       return alert("Please authorize")
