@@ -143,7 +143,6 @@ export const getTags = async (req, res) => {
     });
   }
 }
-
 export const getLastComments = async (req, res) => {
   try {
     const post = await PostModel.find().limit(5).exec()

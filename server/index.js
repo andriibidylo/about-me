@@ -8,6 +8,7 @@ import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags } 
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
 import cors from "cors"
+import fs from 'fs';
 
 const app = express()
 

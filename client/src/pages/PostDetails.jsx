@@ -5,7 +5,7 @@ import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
-
+import ReactMarkdown from 'react-markdown'
 export const PostDetails = () => {
 const [data, setData] = useState()
 const [isLoading, setIsLoading] = useState(true)
@@ -35,7 +35,7 @@ console.log(data)
       <Post
         id={data._id}
         title={data.title}
-        imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+        imageUrl={`http://localhost:8000${data.imageUrl}`}
         user={data.author}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
@@ -43,7 +43,8 @@ console.log(data)
         tags={data.tags}
         isPostDetails
       >
-        <p>{data.text}</p>
+       <ReactMarkdown children={data.text} />,
+
       </Post>
       <CommentsBlock
         items={[
