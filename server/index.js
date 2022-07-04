@@ -51,7 +51,7 @@ app.get("/tags", getTags)
 app.get("/posts/:id", getOnePost)
 app.post("/posts", checkAuth, createPostValidation, createPost)
 app.patch("/posts/", checkAuth, createPostValidation, updatePost)
-app.delete("/posts/", checkAuth, removePost)
+app.delete("/posts/:id", checkAuth, removePost)
 
 
 

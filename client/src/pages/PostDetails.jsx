@@ -35,7 +35,7 @@ console.log(data)
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={`http://localhost:8000${data.imageUrl}`}
+        imageUrl={data.imageUrl ? `http://localhost:8000${data.imageUrl}`: ""}
         user={data.author}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
@@ -43,8 +43,7 @@ console.log(data)
         tags={data.tags}
         isPostDetails
       >
-       <ReactMarkdown children={data.text} />,
-
+       <ReactMarkdown children={data.text}/>
       </Post>
       <CommentsBlock
         items={[

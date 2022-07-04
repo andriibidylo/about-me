@@ -9,6 +9,8 @@ import { Link } from "react-router-dom"
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
+import { useDispatch, useSelector } from 'react-redux'
+import {removePost} from '../../redux/posts/slice'
 
 export const Post = ({
   id,
@@ -24,12 +26,16 @@ export const Post = ({
   isLoading,
   isAuthor,
 }) => {
+
+  const dispatch = useDispatch()
+
+  const onClickRemove = (id) => {
+    console.log("id",id)
+    dispatch(removePost(id))
+  };
   if (isLoading) {
     return <PostSkeleton />;
   }
-
-  const onClickRemove = () => {};
-
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isPostDetails })}>
       {isAuthor && (
@@ -39,7 +45,7 @@ export const Post = ({
               <EditIcon />
             </IconButton>
           </Link>
-          <IconButton onClick={onClickRemove} color="secondary">
+          <IconButton onClick={()=>onClickRemove(id)} color="secondary">
             <DeleteIcon />
           </IconButton>
         </div>

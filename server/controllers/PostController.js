@@ -54,7 +54,7 @@ export const createPost = async (req, res) => {
     const doc = new PostModel({
       title: req.body.title,
       text: req.body.text,
-      tags: req.body.tags,
+      tags: req.body.tags.split(','),
       imageUrl: req.body.imageUrl,
       author: req.userId
     })
