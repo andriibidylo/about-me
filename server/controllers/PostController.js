@@ -11,7 +11,6 @@ export const getAllPosts = async (req, res) => {
     res.json({ message: "Could not show all posts" })
   }
 }
-
 export const getOnePost = async (req, res) => {
   try {
     const postId = req.params.id;

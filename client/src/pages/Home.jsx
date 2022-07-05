@@ -7,7 +7,6 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts, fetchTags } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
-import { fabClasses } from '@mui/material';
 
 
 export const Home = () => {
@@ -18,7 +17,6 @@ export const Home = () => {
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
 
-  console.log("data", data)
   useEffect(() => {
     try {
       dispatch(fetchPosts())
@@ -27,7 +25,6 @@ export const Home = () => {
       console.log(error)
     }
   }, [])
-
 
   return (
     <>

@@ -50,7 +50,7 @@ app.get("/posts", getAllPosts)
 app.get("/tags", getTags)
 app.get("/posts/:id", getOnePost)
 app.post("/posts", checkAuth, createPostValidation, createPost)
-app.patch("/posts/", checkAuth, createPostValidation, updatePost)
+app.patch("/posts/:id", checkAuth, createPostValidation, updatePost)
 app.delete("/posts/:id", checkAuth, removePost)
 
 

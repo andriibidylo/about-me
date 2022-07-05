@@ -4,16 +4,12 @@ import UserModel from "../models/User.js"
 import bcrypt from 'bcrypt'
 
 
-
-
 export const register = async (req, res) => {
- 
+
   try {
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
-
 
     const doc = new UserModel({
       email: req.body.email,
@@ -25,12 +21,12 @@ export const register = async (req, res) => {
 
     const token = jwt.sign(
       {
-      _id: user._id
-    }, 
-    "secretkey", 
-    {
-      expiresIn: "1h"
-    })
+        _id: user._id
+      },
+      "secretkey",
+      {
+        expiresIn: "1h"
+      })
     const { passwordHash, ...userData } = user._doc
     res.json({
       ...userData,
@@ -44,7 +40,7 @@ export const register = async (req, res) => {
   }
 }
 
-export const login  = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email })
     if (!user) {

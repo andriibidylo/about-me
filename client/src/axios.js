@@ -5,7 +5,7 @@ const instance = axios.create({
 })
 
 // Add token to headers requests
-instance.interceptors.request.use((config)=>{
+instance.interceptors.request.use((config) => {
   config.headers.Authorization = window.localStorage.getItem("token")
   return config
 })

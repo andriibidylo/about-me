@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
@@ -7,35 +7,34 @@ import { useParams } from "react-router-dom";
 import axios from "../axios";
 import ReactMarkdown from 'react-markdown'
 export const PostDetails = () => {
-const [data, setData] = useState()
-const [isLoading, setIsLoading] = useState(true)
-const {id} = useParams()
+  const [data, setData] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+  const { id } = useParams()
 
-useEffect(()=>{
-  const fetchData = async() => {
-    try {
-      const {data} = await axios.get(`/posts/${id}`)
-      setData(data)
-      setIsLoading(false)
-  
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`/posts/${id}`)
+        setData(data)
+        setIsLoading(false)
+
+      } catch (error) {
+        console.log(error)
+      }
     }
-  }
-  fetchData()
-  
-},[])
+    fetchData()
+  }, [id])
 
-if (isLoading) {
-  return <Post isLoading/>
-}
-console.log(data)
+  if (isLoading) {
+    return <Post isLoading />
+  }
+
   return (
     <>
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={data.imageUrl ? `http://localhost:8000${data.imageUrl}`: ""}
+        imageUrl={data.imageUrl ? `http://localhost:8000${data.imageUrl}` : ""}
         user={data.author}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
@@ -43,7 +42,7 @@ console.log(data)
         tags={data.tags}
         isPostDetails
       >
-       <ReactMarkdown children={data.text}/>
+        <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
         items={[

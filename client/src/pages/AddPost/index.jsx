@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Navigate } from "react-router";
+import { useSelector } from 'react-redux'
+import { useParams, useNavigate, Navigate } from "react-router";
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { selectAuth } from "../../redux/auth/selectors"
@@ -13,14 +13,14 @@ import axios from "../../axios"
 
 export const AddPost = () => {
 
+  const { id } = useParams()
   const naviagate = useNavigate()
   const inputFileRef = useRef()
-  const [isLoading, setIsLoading] = useState(false)
-
-  const [imageUrl, setImageUrl] = useState("")
+  const isEditing = Boolean(id)
 
   const { data } = useSelector(selectAuth)
 
+  const [imageUrl, setImageUrl] = useState("")
   const [text, setText] = useState("");
   const [title, setTitle] = useState("")
   const [tags, setTags] = useState("")
@@ -30,27 +30,44 @@ export const AddPost = () => {
       const formData = new FormData()
       const file = event.target.files[0]
       formData.append("image", file)
-      console.log(formData)
       const { data } = await axios.post("/upload", formData)
-      console.log(data)
       setImageUrl(data.url)
     } catch (error) {
       console.log(error)
     }
   };
 
+  useEffect(() => {
+    const getPostForEdit = async () => {
+      try {
+        if (id) {
+          const { data } = await axios.get(`/posts/${id}`)
+          setText(data.text)
+          setTitle(data.title)
+          setTags(data.tags.join(','))
+          setImageUrl(data.imageUrl)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getPostForEdit()
+  }, [])
+
   const onSubmit = async () => {
     try {
-      setIsLoading(true)
       const fieldsData = {
         imageUrl,
         text,
         title,
         tags,
       }
-      const { data } = await axios.post("/posts", fieldsData)
-      const id = data._id
-      naviagate(`/posts/${id}`)
+      const { data } = isEditing
+        ? await axios.patch(`/posts/${id}`, fieldsData)
+        : await axios.post("/posts", fieldsData)
+
+      const _id = isEditing ? id : data._id
+      naviagate(`/posts/${_id}`)
 
     } catch (error) {
       console.log(error)
@@ -61,7 +78,7 @@ export const AddPost = () => {
     setImageUrl("")
   };
 
-  
+
   const onChange = useCallback((text) => {
     setText(text);
   }, []);
@@ -85,6 +102,7 @@ export const AddPost = () => {
   if (!window.localStorage.getItem("token") && !Boolean(data)) {
     return <Navigate to="/" />;
   }
+
 
   return (
     <Paper style={{ padding: 30 }}>
@@ -115,7 +133,7 @@ export const AddPost = () => {
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={() => onSubmit()} size="large" variant="contained">
-          Publish
+          {isEditing ? "Save" : "Publish"}
         </Button>
         <a href="/">
           <Button size="large">Cancel</Button>

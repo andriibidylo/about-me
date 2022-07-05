@@ -27,7 +27,7 @@ export const Login = () => {
   // Send axios request with email and password 
   const onSubmit = async (value) => {
     const data = await dispatch(fetchAuthData(value))
-  
+
     // Set token to localStorage
     if (!data.payload) {
       return alert("Please authorize")
