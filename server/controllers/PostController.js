@@ -2,7 +2,7 @@ import PostModel from "../models/Post.js"
 
 export const getAllPosts = async (req, res) => {
   try {
-    const post = await PostModel.find().populate("author").exec()
+    const post = await PostModel.find().sort({"createdAt":-1}).populate("author").exec()
     res.json(post)
 
   } catch (error) {
