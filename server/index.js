@@ -37,7 +37,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 });
 
 mongoose.connect("mongodb+srv://Andrew:CaFMA3g6N8mFmgPo@cluster0.kjby4.mongodb.net/?retryWrites=true&w=majority")
-  .then(console.log("DB connected"))
+  .then(console.log("DB is connected"))
   .catch((err) => console.log("DB error" + err))
 
 app.use(express.json())

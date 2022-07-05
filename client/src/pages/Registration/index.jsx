@@ -15,7 +15,7 @@ import { selectAuth } from "../../redux/auth/selectors"
 export const Registration = () => {
 
   const { data } = useSelector(selectAuth)
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: ""
