@@ -13,13 +13,13 @@ Users can:
 
 ## Final Product
 
-!["main_page_1"]("https://github.com/andrewbidylo/about-me/blob/master/client/docs/main_page.png?raw=true")
+!["main_page_1"](https://github.com/andrewbidylo/about-me/blob/master/client/docs/main_page.png?raw=true)
 
-!["main_page_2"]("https://github.com/andrewbidylo/about-me/blob/master/client/docs/post_details.png?raw=true")
+!["main_page_2"](https://github.com/andrewbidylo/about-me/blob/master/client/docs/post_details.png?raw=true)
 
-!["main_page_3"]("https://github.com/andrewbidylo/about-me/blob/master/client/docs/comments.png?raw=true")
+!["main_page_3"](https://github.com/andrewbidylo/about-me/blob/master/client/docs/comments.png?raw=true)
 
-!["main_page_4"]("https://github.com/andrewbidylo/about-me/blob/master/client/docs/create_an_accaunt.png?raw=true")
+!["main_page_4"](https://github.com/andrewbidylo/about-me/blob/master/client/docs/create_an_accaunt.png?raw=true)
 
 
 ## Dependencies
