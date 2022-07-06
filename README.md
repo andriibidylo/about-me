@@ -1,6 +1,6 @@
-# About me
+# About me app
 
-About-me this is a blog applaction. Client: React.js, JavaScript, Redux, React Router, AJAX, Material-UI. Server: Node.js, Express, Mongoos, JWT. DB: MongoDB. 
+About-me this is a blog applaction. Client: React.js (Hooks: useEffect, useState, useMemo, useRef, useCallback ), JavaScript, Redux-toolkit, React Router(Hooks: useParams, useNavigate, Navigate), AJAX, Material-UI. Server: Node.js, Express, Mongoos, JWT. DB: MongoDB. 
 
 Users can:
 1. Create an accaunt;
@@ -23,6 +23,19 @@ Users can:
 
 
 ## Dependencies
+
+Material-UI 5.8.6,
+Jest 5.16.4,
+Axios 0.27.2,
+Clsx 1.1.1,
+Easymde 2.16.1,
+React 18.2.0,
+React-hook-form 7.33.0,
+React-markdown 8.0.3,
+React-redux 8.0.2,
+React-simplemde-editor 5.0.2,
+Redux 4.2.0,
+Sass 1.53.0,
 
 
 ## Getting Started
