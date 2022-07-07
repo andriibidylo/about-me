@@ -7,10 +7,13 @@ import { selectAuth } from "../../redux/auth/selectors"
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/auth/slice";
 import { UserInfo } from '../UserInfo';
+import {useNavigate} from "react-router"
+import {fetchPosts} from "../../redux/posts/slice"
 
 
 export const Header = () => {
 
+  const naviagate = useNavigate()
   const { data } = useSelector(selectAuth)
   const dispatch = useDispatch()
   const isAuth = Boolean(data)
@@ -19,15 +22,17 @@ export const Header = () => {
     dispatch(logout())
     window.localStorage.removeItem("token")
   };
-
+  const onClickLogo = () => {
+    dispatch(fetchPosts())
+    naviagate("/")
+  }
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-     
-          <Link className={styles.logo} to="/">
+          <div onClick={onClickLogo} className={styles.logo} >
             <div>ABOUT ME APP</div>
-          </Link>
+          </div>
           <div className={styles.inner}>
           {isAuth && <UserInfo {...data}/>} 
           <div className={styles.buttons}>
