@@ -6,7 +6,7 @@ import checkAuth from "./utils/checkAuth.js"
 import { register, login, getMe } from "./controllers/UserController.js"
 import { createPostValidation } from "./validations/post.js"
 import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags } from "./controllers/PostController.js"
-import { createComment, getAllComments } from "./controllers/CommentController.js"
+import { createComment, getLastFourComments, getAllCommentsForPost } from "./controllers/CommentController.js"
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
 import cors from "cors"
@@ -55,7 +55,8 @@ app.post("/posts", checkAuth, createPostValidation, createPost)
 app.patch("/posts/:id", checkAuth, createPostValidation, updatePost)
 app.delete("/posts/:id", checkAuth, removePost)
 
-app.get("/posts/:id/comments", getAllComments)
+app.get("/comments", getLastFourComments)
+app.get("/posts/:id/comments", getAllCommentsForPost)
 app.post("/posts/:id/comments",checkAuth, createCommentValidation, createComment)
 
 app.listen(8000, (err) => {
