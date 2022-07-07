@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import { selectAuth } from "../../redux/auth/selectors"
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/auth/slice";
+import { UserInfo } from '../UserInfo';
 
 
 export const Header = () => {
@@ -23,9 +24,12 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
+     
           <Link className={styles.logo} to="/">
             <div>ABOUT ME APP</div>
           </Link>
+          <div className={styles.inner}>
+          {isAuth && <UserInfo {...data}/>} 
           <div className={styles.buttons}>
             {isAuth ? (
               <>
@@ -47,6 +51,8 @@ export const Header = () => {
               </>
             )}
           </div>
+          </div>
+         
         </div>
       </Container>
     </div>
