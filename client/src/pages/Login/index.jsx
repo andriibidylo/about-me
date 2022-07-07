@@ -12,7 +12,7 @@ import { selectAuth } from "../../redux/auth/selectors"
 
 export const Login = () => {
 
-  const { data } = useSelector(selectAuth)
+  const { authorizedUser } = useSelector(selectAuth)
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -38,12 +38,12 @@ export const Login = () => {
   }
 
   // If user authorized navigate them to Home page
-  if (Boolean(data)) {
+  if (Boolean(authorizedUser)) {
     return <Navigate to="/" />;
   }
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper elevation={0} classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Log in
       </Typography>

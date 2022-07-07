@@ -18,7 +18,7 @@ export const AddPost = () => {
   const inputFileRef = useRef()
   const isEditing = Boolean(id)
 
-  const { data } = useSelector(selectAuth)
+  const { authorizedUser } = useSelector(selectAuth)
 
   const [imageUrl, setImageUrl] = useState("")
   const [text, setText] = useState("");
@@ -99,13 +99,13 @@ export const AddPost = () => {
   );
 
 
-  if (!window.localStorage.getItem("token") && !Boolean(data)) {
+  if (!window.localStorage.getItem("token") && !Boolean(authorizedUser)) {
     return <Navigate to="/" />;
   }
 
 
   return (
-    <Paper style={{ padding: 30 }}>
+    <Paper elevation={0} style={{ padding: 30 }}>
       <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
         Upload preview
       </Button>

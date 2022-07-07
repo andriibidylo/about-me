@@ -79,7 +79,7 @@ export const createPost = async (req, res) => {
       text: req.body.text,
       tags: req.body.tags.split(','),
       imageUrl: req.body.imageUrl,
-      author: req.userId
+      author: req.userId,
     })
     const post = await doc.save()
     res.json(post)
@@ -157,20 +157,6 @@ export const getTags = async (req, res) => {
     const post = await PostModel.find().limit(5).exec()
 
     const tags = post.map((obj) => obj.tags).flat().slice(0, 5)
-
-    res.json(tags)
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: 'Tags did not get',
-    });
-  }
-}
-export const getLastComments = async (req, res) => {
-  try {
-    const post = await PostModel.find().limit(5).exec()
-
-    const tags = post.map((obj) => obj.comments).flat().slice(0, 5)
 
     res.json(tags)
   } catch (err) {

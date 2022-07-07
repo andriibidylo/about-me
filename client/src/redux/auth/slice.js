@@ -22,7 +22,7 @@ export const fetchRegister = createAsyncThunk(
 )
 
 const initialState = {
-  data: null,
+  authorizedUser: null,
   status: "loading",
 }
 
@@ -31,45 +31,45 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.data = null
+      state.authorizedUser = null
     }
   },
   extraReducers: {
     [fetchAuthData.pending]: (state) => {
       state.status = "loading"
-      state.data = null
+      state.authorizedUser = null
     },
     [fetchAuthData.fulfilled]: (state, action) => {
-      state.data = action.payload
+      state.authorizedUser = action.payload
       state.status = "success"
     },
     [fetchIsAuthMe.rejected]: (state) => {
       state.status = "error"
-      state.data = null
+      state.authorizedUser = null
     },
     [fetchIsAuthMe.pending]: (state) => {
       state.status = "loading"
-      state.data = null
+      state.authorizedUser = null
     },
     [fetchIsAuthMe.fulfilled]: (state, action) => {
-      state.data = action.payload
+      state.authorizedUser = action.payload
       state.status = "success"
     },
     [fetchAuthData.rejected]: (state) => {
       state.status = "error"
-      state.data = null
+      state.authorizedUser = null
     },
     [fetchRegister.pending]: (state) => {
       state.status = "loading"
-      state.data = []
+      state.authorizedUser = []
     },
     [fetchRegister.fulfilled]: (state, action) => {
-      state.data = action.payload
+      state.authorizedUser = action.payload
       state.status = "success"
     },
     [fetchRegister.rejected]: (state) => {
       state.status = "error"
-      state.data = []
+      state.authorizedUser = []
     },
   }
 })

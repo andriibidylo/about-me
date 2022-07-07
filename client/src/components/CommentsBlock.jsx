@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { SideBlock } from "./SideBlock";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -12,11 +12,11 @@ import { useSelector } from 'react-redux'
 
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
 
-  const { data } = useSelector(state => state.auth)
+  const { authorizedUser } = useSelector(state => state.auth)
   return (
     <SideBlock title="Comments">
       <List>
-        {(isLoading ? [...Array(5)] : items).map((obj, index) => (
+        {(isLoading ? [...Array(5)] : items.slice(0, 5)).map((obj, index) => (
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
@@ -43,7 +43,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
           </React.Fragment>
         ))}
       </List>
-      {data && children}
+      {authorizedUser && children}
     </SideBlock>
   );
 };

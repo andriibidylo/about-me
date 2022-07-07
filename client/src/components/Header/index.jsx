@@ -14,9 +14,9 @@ import {fetchPosts} from "../../redux/posts/slice"
 export const Header = () => {
 
   const naviagate = useNavigate()
-  const { data } = useSelector(selectAuth)
+  const { authorizedUser } = useSelector(selectAuth)
   const dispatch = useDispatch()
-  const isAuth = Boolean(data)
+  const isAuth = Boolean(authorizedUser)
 
   const onClickLogout = () => {
     dispatch(logout())
@@ -34,7 +34,7 @@ export const Header = () => {
             <div>ABOUT ME APP</div>
           </div>
           <div className={styles.inner}>
-          {isAuth && <UserInfo {...data}/>} 
+          {isAuth && <UserInfo {...authorizedUser}/>} 
           <div className={styles.buttons}>
             {isAuth ? (
               <>

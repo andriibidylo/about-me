@@ -10,7 +10,6 @@ import {fetchComments, fetchPosts, setPosts} from "../api"
 
 export const PostDetails = () => {
 
-
   const [post, setPost] = useState()
   const [comment, setComment] = useState()
   const [isLoading, setIsLoading] = useState(true)
@@ -62,7 +61,7 @@ export const PostDetails = () => {
         user={post.author}
         createdAt={post.createdAt}
         viewsCount={post.viewsCount}
-        commentsCount={post.commentsCount}
+        commentsCount={""}
         tags={post.tags}
         isPostDetails
       >

@@ -5,26 +5,30 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags, fetchLastComments, fetchPostsByTag, fetchPostsByPopular } from '../redux/posts/slice'
+import { fetchPosts, fetchPostsByTag, fetchPostsByPopular } from '../redux/posts/slice'
+import { fetchTags } from '../redux/tags/slice'
+import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 export const Home = () => {
 
   const dispatch = useDispatch()
-  const { posts, tags, lastComments } = useSelector(state => state.posts)
+  const { posts } = useSelector(state => state.posts)
+  const { tags } = useSelector(state => state.tags)
+  const { allComments } = useSelector(state => state.comments)
+  const { authorizedUser } = useSelector(state => state.auth)
 
-  const { data } = useSelector(state => state.auth)
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
-  const isCommentsLoading = lastComments.status === "loading"
+  const isCommentsLoading = allComments.status === "loading"
   const [buttonValue, setButtonValue] = useState(0)
 
   useEffect(() => {
     try {
       dispatch(fetchPosts())
       dispatch(fetchTags())
-      dispatch(fetchLastComments())
+      dispatch(fetchAllComments())
     } catch (error) {
       console.log(error)
     }
@@ -40,6 +44,10 @@ export const Home = () => {
   }
   const clickOnTag = (tag) => {
     dispatch(fetchPostsByTag(tag))
+  }
+  const countCommentsForPost = (post) => {
+    const filteredPosts = allComments.items.filter(el => el.post === post).length
+    return filteredPosts
   }
 
   return (
@@ -60,9 +68,9 @@ export const Home = () => {
               user={post.author}
               createdAt={post.createdAt}
               viewsCount={post.viewsCount}
-              commentsCount={post.commentsCount}
+              commentsCount={countCommentsForPost(post._id)}
               tags={post.tags}
-              isAuthor={data?._id === post.author._id}
+              isAuthor={authorizedUser?._id === post.author._id}
               isLoading={false}
             />
             ))}
@@ -70,7 +78,7 @@ export const Home = () => {
         <Grid xs={4} item>
           <TagsBlock onClickOnTag={clickOnTag} items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
-            items={lastComments.items}
+            items={allComments.items}
             isLoading={isCommentsLoading}
           />
         </Grid>

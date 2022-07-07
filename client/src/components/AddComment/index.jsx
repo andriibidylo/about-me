@@ -8,14 +8,14 @@ import Button from "@mui/material/Button";
 
 export const AddComment = ({ onSubmit, setText, text}) => {
  
-  const { data } = useSelector(state => state.auth)
+  const { authorizedUser } = useSelector(state => state.auth)
 
   return (
     <>
       <div className={styles.root}>
         <Avatar
           classes={{ root: styles.avatar }}
-          src={data ? data.avatarUrl : ""}
+          src={authorizedUser ? authorizedUser.avatarUrl : ""}
         />
         <div className={styles.form}>
           <TextField
