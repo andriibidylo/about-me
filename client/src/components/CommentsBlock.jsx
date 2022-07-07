@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { SideBlock } from "./SideBlock";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -23,7 +23,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
                 {isLoading ? (
                   <Skeleton variant="circular" width={40} height={40} />
                 ) : (
-                  <Avatar alt={obj.user.fullName} src={obj.user.avatarUrl} />
+                  <Avatar alt={obj.author.avatarUrl} src={obj.author.avatarUrl} />
                 )}
               </ListItemAvatar>
               {isLoading ? (
@@ -32,8 +32,9 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
                   <Skeleton variant="text" height={18} width={230} />
                 </div>
               ) : (
+              
                 <ListItemText
-                  primary={obj.user.fullName}
+                  primary={obj.author.fullName}
                   secondary={obj.text}
                 />
               )}

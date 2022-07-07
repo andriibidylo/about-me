@@ -14,6 +14,12 @@ export const fetchTags = createAsyncThunk(
     return data
   }
 )
+export const fetchLastComments = createAsyncThunk(
+  'posts/fetchLastComments', async () => {
+    const { data } = await axios.get("/comments")
+    return data
+  }
+)
 
 export const removePost = createAsyncThunk(
   'posts/removePost', async (id) => await axios.delete(`/posts/${id}`)
@@ -28,6 +34,11 @@ const initialState = {
     items: [],
     status: "loading"
   },
+  lastComments: {
+    items: [],
+    status: "loading"
+  },
+
 }
 
 
@@ -59,6 +70,18 @@ export const postsSlice = createSlice({
     [fetchTags.rejected]: (state) => {
       state.tags.status = "error"
       state.tags.items = []
+    },
+    [fetchLastComments.pending]: (state) => {
+      state.lastComments.status = "loading"
+      state.lastComments.items = []
+    },
+    [fetchLastComments.fulfilled]: (state, action) => {
+      state.lastComments.items = action.payload
+      state.lastComments.status = "success"
+    },
+    [fetchLastComments.rejected]: (state) => {
+      state.lastComments.status = "error"
+      state.lastComments.items = []
     },
     [removePost.pending]: (state, action) => {
       state.posts.items = state.posts.items.filter((item) => item._id !== action.meta.arg)

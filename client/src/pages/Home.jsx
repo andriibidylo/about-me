@@ -1,30 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags } from '../redux/posts/slice'
+import { fetchPosts, fetchTags, fetchLastComments } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 export const Home = () => {
 
   const dispatch = useDispatch()
-  const { posts, tags } = useSelector(state => state.posts)
+  const { posts, tags, lastComments } = useSelector(state => state.posts)
+  
   const { data } = useSelector(state => state.auth)
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
+  const isCommentsLoading = lastComments.status === "loading"
 
   useEffect(() => {
     try {
       dispatch(fetchPosts())
       dispatch(fetchTags())
+      dispatch(fetchLastComments())
     } catch (error) {
       console.log(error)
     }
   }, [])
+
 
   return (
     <>
@@ -54,23 +58,8 @@ export const Home = () => {
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'John Deere',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'First comment',
-              },
-              {
-                user: {
-                  fullName: 'Antony Che',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
+            items={lastComments.items}
+            isLoading={isCommentsLoading}
           />
         </Grid>
       </Grid>
