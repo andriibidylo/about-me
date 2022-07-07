@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Post } from "../components/Post";
-import { Index } from "../components/AddComment";
+import { AddComment } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
@@ -15,6 +15,8 @@ export const PostDetails = () => {
   const [comment, setComment] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const { id } = useParams()
+  const [text, setText] = useState()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +35,17 @@ export const PostDetails = () => {
   }, [])
 
 
+  const onSubmit = async () => {
+    try {
+      const data = {
+        text
+      }
+      await axios.post(`/posts/${id}/comments`, data)
+      setText("")
+    } catch (error) {
+      console.log(error)
+    }
+  }
   if (isLoading) {
     return <Post isLoading />
   }
@@ -56,7 +69,7 @@ export const PostDetails = () => {
         items={comment}
         isLoading={false}
       >
-        <Index />
+        <AddComment onSubmit={onSubmit}  text={text} setText={setText}/>
       </CommentsBlock>
     </>
   );
