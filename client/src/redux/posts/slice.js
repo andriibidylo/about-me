@@ -8,10 +8,21 @@ export const fetchPosts = createAsyncThunk(
     return data
   }
 )
-
 export const fetchTags = createAsyncThunk(
   'posts/fetchTags', async () => {
     const { data } = await axios.get("/tags")
+    return data
+  }
+)
+export const fetchPostsByPopular = createAsyncThunk(
+  'posts/fetchPostsByPopular', async () => {
+    const { data } = await axios.get(`/posts/popular`)
+    return data
+  }
+)
+export const fetchPostsByTag = createAsyncThunk(
+  'posts/fetchPostsByTag', async (tag) => {
+    const { data } = await axios.get(`/posts/tags/${tag}`)
     return data
   }
 )
@@ -21,7 +32,6 @@ export const fetchLastComments = createAsyncThunk(
     return data
   }
 )
-
 export const removePost = createAsyncThunk(
   'posts/removePost', async (id) => await axios.delete(`/posts/${id}`)
 )
@@ -47,20 +57,6 @@ export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    sortByPopular: (state) => {
-      state.posts.items = state.posts.items.slice().sort((a, b) => {
-        if (a.viewsCount > b.viewsCount) return -1
-        if (a.viewsCount < b.viewsCount) return 1
-        return 0
-      })
-    },
-    sortByNew: (state) => {
-      state.posts.items = state.posts.items.slice().sort((a, b) => {
-        if (a.createdAt > b.createdAt) return -1
-        if (a.createdAt < b.createdAt) return 1
-        return 0
-      })
-    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
@@ -72,6 +68,30 @@ export const postsSlice = createSlice({
       state.posts.status = "success"
     },
     [fetchPosts.rejected]: (state) => {
+      state.posts.status = "error"
+      state.posts.items = []
+    },
+    [fetchPostsByPopular.pending]: (state) => {
+      state.posts.status = "loading"
+      state.posts.items = []
+    },
+    [fetchPostsByPopular.fulfilled]: (state, action) => {
+      state.posts.items = action.payload
+      state.posts.status = "success"
+    },
+    [fetchPostsByPopular.rejected]: (state) => {
+      state.posts.status = "error"
+      state.posts.items = []
+    },
+    [fetchPostsByTag.pending]: (state) => {
+      state.posts.status = "loading"
+      state.posts.items = []
+    },
+    [fetchPostsByTag.fulfilled]: (state, action) => {
+      state.posts.items = action.payload
+      state.posts.status = "success"
+    },
+    [fetchPostsByTag.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
     },
