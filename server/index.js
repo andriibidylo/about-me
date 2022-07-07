@@ -1,10 +1,12 @@
 import express, { json } from "express"
 import { registerValidation, loginValidation } from "./validations/auth.js"
+import { createCommentValidation} from "./validations/comment.js"
 import mongoose from "mongoose"
 import checkAuth from "./utils/checkAuth.js"
 import { register, login, getMe } from "./controllers/UserController.js"
 import { createPostValidation } from "./validations/post.js"
 import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags } from "./controllers/PostController.js"
+import { createComment, getAllComments } from "./controllers/CommentController.js"
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
 import cors from "cors"
@@ -28,6 +30,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.use(cors())
+
+mongoose.connect("mongodb+srv://Andrew:CaFMA3g6N8mFmgPo@cluster0.kjby4.mongodb.net/?retryWrites=true&w=majority")
+  .then(console.log("DB is connected"))
+  .catch((err) => console.log("DB error" + err))
+
+app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
@@ -35,12 +43,6 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
     url: `/uploads/${req.file.originalname}`,
   });
 });
-
-mongoose.connect("mongodb+srv://Andrew:CaFMA3g6N8mFmgPo@cluster0.kjby4.mongodb.net/?retryWrites=true&w=majority")
-  .then(console.log("DB is connected"))
-  .catch((err) => console.log("DB error" + err))
-
-app.use(express.json())
 
 app.post("/auth/register", registerValidation, handleValidationErrors, register)
 app.post("/auth/login", loginValidation, handleValidationErrors, login)
@@ -53,7 +55,8 @@ app.post("/posts", checkAuth, createPostValidation, createPost)
 app.patch("/posts/:id", checkAuth, createPostValidation, updatePost)
 app.delete("/posts/:id", checkAuth, removePost)
 
-
+app.get("/posts/:id/comments", getAllComments)
+app.post("/posts/:id/comments",checkAuth, createCommentValidation, createComment)
 
 app.listen(8000, (err) => {
   if (err) {
