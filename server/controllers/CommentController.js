@@ -2,7 +2,7 @@ import CommentModel from "../models/Comment.js"
 
 export const getAllCommentsForPost = async (req, res) => {
   try {
-    const post = await CommentModel.find({ "post": req.params.id }).sort({ "createdAt": -1 }).populate("author").exec()
+    const post = await CommentModel.find({ "post": req.params.id }).populate("author").exec()
     res.json(post)
 
   } catch (error) {

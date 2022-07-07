@@ -13,6 +13,7 @@ export const Header = () => {
   const { data } = useSelector(selectAuth)
   const dispatch = useDispatch()
   const isAuth = Boolean(data)
+  
   const onClickLogout = () => {
     dispatch(logout())
     window.localStorage.removeItem("token")

@@ -4,8 +4,8 @@ import { Post } from "../components/Post";
 import { AddComment } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
-import axios from "../axios";
 import ReactMarkdown from 'react-markdown'
+import {fetchComments, fetchPosts, setPosts} from "../api"
 
 
 export const PostDetails = () => {
@@ -21,10 +21,10 @@ export const PostDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const post = await axios.get(`/posts/${id}`)
-        const comment = await axios.get(`/posts/${id}/comments`)
-        setComment(comment.data)
-        setPost(post.data)
+        const post = await fetchPosts(id)
+        const comment = await fetchComments(id)
+        setComment(comment)
+        setPost(post)
         setIsLoading(false)
 
       } catch (error) {
@@ -40,12 +40,15 @@ export const PostDetails = () => {
       const data = {
         text
       }
-      await axios.post(`/posts/${id}/comments`, data)
+      await setPosts(data, id)
+      const comment = await fetchComments(id)
       setText("")
+      setComment(comment)
     } catch (error) {
       console.log(error)
     }
   }
+
   if (isLoading) {
     return <Post isLoading />
   }

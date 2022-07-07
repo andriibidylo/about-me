@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-
+import React from "react";
 import styles from "./AddComment.module.scss";
 import { useSelector } from 'react-redux'
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import axios from "../../axios"
 
 
 export const AddComment = ({ onSubmit, setText, text}) => {
