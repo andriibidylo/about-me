@@ -40,3 +40,4 @@ export const createComment = async (req, res) => {
     res.json({ message: "Comment did not create" })
   }
 }
+
