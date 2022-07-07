@@ -5,9 +5,9 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags, fetchLastComments, fetchPopularPosts } from '../redux/posts/slice'
+import { fetchPosts, fetchTags, fetchLastComments } from '../redux/posts/slice'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { sortByPopular,sortByNew } from "../redux/posts/slice";
 
 export const Home = () => {
 
@@ -32,11 +32,11 @@ export const Home = () => {
 
   const clickPopularPosts = () => {
     setButtonValue(1)
-    dispatch(fetchPopularPosts())
+    dispatch(sortByPopular())
   }
   const clickAllPosts = () => {
     setButtonValue(0)
-    dispatch(fetchPosts())
+    dispatch(sortByNew())
   }
 
   return (

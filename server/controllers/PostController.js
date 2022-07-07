@@ -11,17 +11,7 @@ export const getAllPosts = async (req, res) => {
     res.json({ message: "Could not show all posts" })
   }
 }
-export const getPopularPosts = async (req, res) => {
-  try {
-    const post = await PostModel.find().sort({"viewsCount":-1}).populate("author").exec()
-    res.json(post)
 
-  } catch (error) {
-    console.log(error)
-    res.status(500)
-    res.json({ message: "Could not show all posts" })
-  }
-}
 export const getOnePost = async (req, res) => {
   try {
     const postId = req.params.id;

@@ -8,11 +8,6 @@ export const fetchPosts = createAsyncThunk(
     return data
   }
 )
-export const fetchPopularPosts = createAsyncThunk(
-  "posts/fethcPosts", async()=>{
-    const {data}= await axios.get("/posts/popular")
-    return data
-  })
 
 export const fetchTags = createAsyncThunk(
   'posts/fetchTags', async () => {
@@ -51,7 +46,22 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    sortByPopular: (state) => {
+      state.posts.items = state.posts.items.slice().sort((a, b) => {
+        if (a.viewsCount > b.viewsCount) return -1
+        if (a.viewsCount < b.viewsCount) return 1
+        return 0
+      })
+    },
+    sortByNew: (state) => {
+      state.posts.items = state.posts.items.slice().sort((a, b) => {
+        if (a.createdAt > b.createdAt) return -1
+        if (a.createdAt < b.createdAt) return 1
+        return 0
+      })
+    },
+  },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.posts.status = "loading"
@@ -62,18 +72,6 @@ export const postsSlice = createSlice({
       state.posts.status = "success"
     },
     [fetchPosts.rejected]: (state) => {
-      state.posts.status = "error"
-      state.posts.items = []
-    },
-    [fetchPopularPosts.pending]: (state) => {
-      state.posts.status = "loading"
-      state.posts.items = []
-    },
-    [fetchPopularPosts.fulfilled]: (state, action) => {
-      state.posts.items = action.payload
-      state.posts.status = "success"
-    },
-    [fetchPopularPosts.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
     },
@@ -106,5 +104,5 @@ export const postsSlice = createSlice({
     },
   },
 })
-
+export const { sortByPopular, sortByNew } = postsSlice.actions
 export default postsSlice.reducer
