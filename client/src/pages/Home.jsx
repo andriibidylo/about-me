@@ -54,6 +54,7 @@ export const Home = () => {
     return filteredPosts
   }
 
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={buttonValue} aria-label="basic tabs example">
@@ -82,7 +83,7 @@ export const Home = () => {
         <Grid xs={4} item>
           <TagsBlock onClickOnTag={clickOnTag} items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
-            items={allComments.items}
+            items={allComments.items.slice(0,5)}
             isLoading={isCommentsLoading}
           />
         </Grid>

@@ -7,6 +7,12 @@ export const fetchAllComments = createAsyncThunk(
     return data
   }
 )
+export const removeComment = createAsyncThunk(
+  "comments/removeComment", async (id) => {
+    const { data } = await axios.delete(`/comments/${id}`)
+    return data
+  }
+)
 
 const initialState = {
   allComments: {
@@ -21,7 +27,7 @@ export const commentsSlice = createSlice({
   reducers: {
   },
   extraReducers: {
-   
+
     [fetchAllComments.pending]: (state) => {
       state.allComments.status = "loading"
       state.allComments.items = []
@@ -33,6 +39,9 @@ export const commentsSlice = createSlice({
     [fetchAllComments.rejected]: (state) => {
       state.allComments.status = "error"
       state.allComments.items = []
+    },
+    [removeComment.fulfilled]: (state, action) => {
+      state.allComments.items = state.allComments.items.filter((item) => item._id !== action.meta.arg)
     },
   },
 })

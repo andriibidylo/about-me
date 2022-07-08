@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-
 import { Post } from "../components/Post";
 import { AddComment } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
-import {fetchComments, fetchPosts, setPosts} from "../api"
-import {formatDate} from "./Home"
+import { fetchComments, fetchPosts, setPosts } from "../api"
+import { formatDate } from "./Home"
+import { useSelector } from 'react-redux'
+
 
 export const PostDetails = () => {
+
+  const { allComments } = useSelector(state => state.comments)
 
   const [post, setPost] = useState()
   const [comment, setComment] = useState()
@@ -31,7 +34,7 @@ export const PostDetails = () => {
       }
     }
     fetchData()
-  }, [])
+  }, [allComments])
 
 
   const onSubmit = async () => {
@@ -71,7 +74,7 @@ export const PostDetails = () => {
         items={comment}
         isLoading={false}
       >
-        <AddComment onSubmit={onSubmit}  text={text} setText={setText}/>
+        <AddComment onSubmit={onSubmit} text={text} setText={setText} />
       </CommentsBlock>
     </>
   );

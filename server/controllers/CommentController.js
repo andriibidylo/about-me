@@ -41,3 +41,38 @@ export const createComment = async (req, res) => {
   }
 }
 
+export const removeComment = async (req, res) => {
+
+  try {
+    const commentId = req.params.id;
+
+    CommentModel.findOneAndDelete(
+      {
+        _id: commentId,
+      },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: 'Comment did not delete',
+          });
+        }
+
+        if (!doc) {
+          return res.status(404).json({
+            message: 'Comment not found',
+          });
+        }
+
+        res.json({
+          success: true,
+        });
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Comment did not get',
+    });
+  }
+}
