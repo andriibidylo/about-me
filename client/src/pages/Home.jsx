@@ -54,7 +54,6 @@ export const Home = () => {
     return filteredPosts
   }
 
-
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={buttonValue} aria-label="basic tabs example">
