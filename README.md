@@ -2,14 +2,18 @@
 
 About-me this is a blog applaction. Client: React.js (Hooks: useEffect, useState, useMemo, useRef, useCallback ), JavaScript, Redux-toolkit, React Router(Hooks: useParams, useNavigate, Navigate), AJAX, Material-UI. Server: Node.js, Express, Mongoos, JWT. DB: MongoDB. 
 
-Users can:
+User can:
+
 1. Create an accaunt;
 2. Log in / Log out;
 3. Add posts (title, image, tags, taxt);
-4. Comment posts;
-5. See number of views;
-6. Sort posts by popular;
-7. See posts with particular tags.
+4. Edit/Remove posts
+5. Comment posts;
+6. Remove comment
+7. See number of views;
+8. Sort posts by popular;
+9. See posts with particular tags.
+
 
 ## Final Product
 
