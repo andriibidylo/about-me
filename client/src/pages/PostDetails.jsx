@@ -6,7 +6,7 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import {fetchComments, fetchPosts, setPosts} from "../api"
-
+import {formatDate} from "./Home"
 
 export const PostDetails = () => {
 
@@ -59,7 +59,7 @@ export const PostDetails = () => {
         title={post.title}
         imageUrl={post.imageUrl ? `http://localhost:8000${post.imageUrl}` : ""}
         user={post.author}
-        createdAt={post.createdAt}
+        createdAt={formatDate(post.createdAt)}
         viewsCount={post.viewsCount}
         commentsCount={comment.length}
         tags={post.tags}

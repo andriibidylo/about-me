@@ -10,6 +10,10 @@ import { fetchTags } from '../redux/tags/slice'
 import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
 
+export const formatDate = (timestemp) => {
+  let date = new Date(timestemp).toUTCString();;
+  return date.split(' ').slice(0, 4).join(' ');
+}
 
 export const Home = () => {
 
@@ -49,11 +53,6 @@ export const Home = () => {
     const filteredPosts = allComments.items.filter(el => el.post === post).length
     return filteredPosts
   }
-  const formatDate = (timestemp) => {
-    let date = new Date(timestemp).toUTCString();;
-    return date.split(' ').slice(0, 4).join(' ');
-  }
-
 
   return (
     <>
