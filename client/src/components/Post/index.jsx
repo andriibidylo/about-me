@@ -53,11 +53,12 @@ export const Post = ({
         </div>
       )}
       {imageUrl && (
-        <img
+        <Link to={`/posts/${id}`}> <img
           className={clsx(styles.image, { [styles.imageFull]: isPostDetails })}
           src={imageUrl}
           alt={title}
         />
+        </Link>
       )}
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
