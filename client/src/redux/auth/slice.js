@@ -43,7 +43,7 @@ export const authSlice = createSlice({
       state.authorizedUser = action.payload
       state.status = "success"
     },
-    [fetchIsAuthMe.rejected]: (state) => {
+    [fetchAuthData.rejected]: (state) => {
       state.status = "error"
       state.authorizedUser = null
     },
@@ -55,7 +55,7 @@ export const authSlice = createSlice({
       state.authorizedUser = action.payload
       state.status = "success"
     },
-    [fetchAuthData.rejected]: (state) => {
+    [fetchIsAuthMe.rejected]: (state) => {
       state.status = "error"
       state.authorizedUser = null
     },
