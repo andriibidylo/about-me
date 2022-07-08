@@ -61,7 +61,7 @@ export const PostDetails = () => {
         user={post.author}
         createdAt={post.createdAt}
         viewsCount={post.viewsCount}
-        commentsCount={""}
+        commentsCount={comment.length}
         tags={post.tags}
         isPostDetails
       >

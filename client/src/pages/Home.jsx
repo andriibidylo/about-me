@@ -49,6 +49,11 @@ export const Home = () => {
     const filteredPosts = allComments.items.filter(el => el.post === post).length
     return filteredPosts
   }
+  const formatDate = (timestemp) => {
+    let date = new Date(timestemp).toUTCString();;
+    return date.split(' ').slice(0, 4).join(' ');
+  }
+
 
   return (
     <>
@@ -66,7 +71,7 @@ export const Home = () => {
               title={post.title}
               imageUrl={post.imageUrl ? `http://localhost:8000${post.imageUrl}` : ""}
               user={post.author}
-              createdAt={post.createdAt}
+              createdAt={formatDate(post.createdAt)}
               viewsCount={post.viewsCount}
               commentsCount={countCommentsForPost(post._id)}
               tags={post.tags}
