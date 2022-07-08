@@ -7,9 +7,9 @@ User can:
 1. Create an accaunt;
 2. Log in / Log out;
 3. Add posts (title, image, tags, taxt);
-4. Edit/Remove posts
+4. Edit/Remove posts;
 5. Comment posts;
-6. Remove comment
+6. Remove comment;
 7. See number of views;
 8. Sort posts by popular;
 9. See posts with particular tags.
