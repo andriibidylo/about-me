@@ -19,7 +19,7 @@ export const AddComment = ({ onSubmit, setText, text}) => {
         />
         <div className={styles.form}>
           <TextField
-            label="Add comment"
+            label="Add a comment..."
             variant="outlined"
             maxRows={10}
             multiline
