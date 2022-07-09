@@ -1,5 +1,5 @@
 import React from "react";
-import { SideBlock } from "./SideBlock";
+import { SideBlock } from "../SideBlock";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
@@ -11,7 +11,9 @@ import { useSelector } from 'react-redux'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
 import { useDispatch } from 'react-redux'
-import {removeComment} from '../redux/comments/slice'
+import {removeComment} from '../../redux/comments/slice'
+import styles from './CommentsBlock.module.scss';
+
 
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
  const dispatch = useDispatch()
@@ -22,13 +24,12 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
   };
 
 
-
   const { authorizedUser } = useSelector(state => state.auth)
   return (
     <SideBlock title="Comments">
       <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
-          <React.Fragment key={index}>
+          <div className={styles.root} key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -38,19 +39,19 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
                 )}
               </ListItemAvatar>
               {isLoading ? (
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className={styles.skeleton}>
                   <Skeleton variant="text" height={25} width={120} />
                   <Skeleton variant="text" height={18} width={230} />
                 </div>
               ) : (
-                <div style={{ display: "flex", flexDirection: "row", "justifyContent": "space-between", "width": "100%" }}>
+                <div className={styles.commentsBlock}>
                   <div>
                     <ListItemText
                       primary={obj.author.fullName}
                       secondary={obj.text}
                     />
                   </div>
-                  {authorizedUser && <div onClick ={()=>onClickRemove(obj._id)} style={{ "display": "flex", "alignItems": "center", "justifyContent": "center" }} >
+                  {authorizedUser && <div className={styles.removeButton} onClick ={()=>onClickRemove(obj._id)} >
                     <IconButton color="secondary">
                       <DeleteIcon />
                     </IconButton>
@@ -59,7 +60,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
               )}
             </ListItem>
             <Divider variant="inset" component="li" />
-          </React.Fragment>
+          </div>
         ))}
       </List>
       {authorizedUser && children}
