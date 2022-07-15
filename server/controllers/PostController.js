@@ -2,7 +2,11 @@ import PostModel from "../models/Post.js"
 
 export const getAllPosts = async (req, res) => {
   try {
-    const post = await PostModel.find().sort({"createdAt":-1}).populate("author").exec()
+    let { title } = req.query;
+    if (title) {
+      title = { "title": { '$regex': title, $options: 'i' } }
+    }
+    const post = await PostModel.find(title).sort({ "createdAt": -1 }).populate("author").exec()
     res.json(post)
 
   } catch (error) {
@@ -11,9 +15,10 @@ export const getAllPosts = async (req, res) => {
     res.json({ message: "Could not show all posts" })
   }
 }
+
 export const getPopularPosts = async (req, res) => {
   try {
-    const post = await PostModel.find().sort({"viewsCount":-1}).populate("author").exec()
+    const post = await PostModel.find().sort({ "viewsCount": -1 }).populate("author").exec()
     res.json(post)
 
   } catch (error) {
@@ -25,7 +30,7 @@ export const getPopularPosts = async (req, res) => {
 
 export const getPostsWithTag = async (req, res) => {
   try {
-    const post = await PostModel.find({"tags":req.params.tag}).sort({"createdAt":-1}).populate("author").exec()
+    const post = await PostModel.find({ "tags": req.params.tag }).sort({ "createdAt": -1 }).populate("author").exec()
     res.json(post)
 
   } catch (error) {

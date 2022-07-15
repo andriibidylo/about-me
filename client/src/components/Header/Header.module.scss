@@ -1,14 +1,20 @@
 .root {
   background-color: #fff;
   padding: 10px 0;
+
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
 }
-
 .inner {
   display: flex;
   justify-content: space-between;
+  height: 40px;
+  align-items: center;
 }
+.search{
+  width: 400px; 
+}
+
 
 .logo {
   background-color: black;
@@ -17,6 +23,7 @@
   line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 0.15px;
+  
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
@@ -28,8 +35,10 @@
 }
 
 .buttons {
+  
   button {
     margin-left: 10px;
+   
   }
 
   a {

@@ -63,6 +63,8 @@ app.get("/posts/:id/comments", getAllCommentsForPost)
 app.post("/posts/:id/comments",checkAuth, createCommentValidation, createComment)
 app.delete("/comments/:id", checkAuth, createCommentValidation, removeComment)
 
+
+
 app.listen(8000, (err) => {
   if (err) {
     console.log("Server error")
