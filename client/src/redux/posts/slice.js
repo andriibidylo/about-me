@@ -3,8 +3,11 @@ import axios from "../../axios"
 
 
 export const fetchPosts = createAsyncThunk(
-  'posts/fetchPosts', async () => {
-    const { data } = await axios.get("/posts")
+  'posts/fetchPosts', async ({ searchValue, sortByTag, sortByPopular }) => {
+    const title = searchValue ? `&title=${searchValue}` : ""
+    const tags = sortByTag ? `&tags=${sortByTag}` : ""
+    const { data } = await axios.get(`/posts?popular=${sortByPopular}${title}${tags}`)
+
     return data
   }
 )

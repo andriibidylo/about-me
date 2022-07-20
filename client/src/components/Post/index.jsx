@@ -37,7 +37,7 @@ export const Post = ({
   if (isLoading) {
     return <PostSkeleton />;
   }
-  
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isPostDetails })}>
       {isAuthor && (
@@ -53,11 +53,12 @@ export const Post = ({
         </div>
       )}
       {imageUrl && (
-        <img
+        <Link to={`/posts/${id}`}><img
           className={clsx(styles.image, { [styles.imageFull]: isPostDetails })}
           src={imageUrl}
           alt={title}
         />
+        </Link>
       )}
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />
@@ -68,7 +69,7 @@ export const Post = ({
           <ul className={styles.tags}>
             {tags.map((name) => (
               <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                #{name}
               </li>
             ))}
           </ul>

@@ -5,8 +5,8 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { fetchComments, fetchPosts, setPosts } from "../api"
-import { formatDate } from "./Home"
 import { useSelector } from 'react-redux'
+import { formatDate } from '../helpers'
 
 
 export const PostDetails = () => {

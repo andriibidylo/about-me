@@ -4,15 +4,33 @@
 
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
+.searchField {
+  width: 400px;
+  .clearIcon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.3;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+    
+  }
+  .search {
+    width: 400px;
+  }
 }
+  
+
 .inner {
   display: flex;
   justify-content: space-between;
   height: 40px;
   align-items: center;
-}
-.search{
-  width: 400px; 
 }
 
 
@@ -23,29 +41,28 @@
   line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 0.15px;
-  
+
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
   cursor: pointer;
-  
+
   &:hover {
     background-color: #4361ee;
   }
 }
 
 .buttons {
-  
   button {
     margin-left: 10px;
-   
   }
 
   a {
     text-decoration: none;
   }
-  .rightBlock{
+  .rightBlock {
     display: flex;
     justify-content: space-between;
   }
+}
 }
