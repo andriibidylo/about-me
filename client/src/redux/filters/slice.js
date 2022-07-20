@@ -21,10 +21,15 @@ export const filterSlice = createSlice({
     setSortByPopular: (state, action) => {
       state.sortByPopular = action.payload
     },
+    setDefaultSearchValues: (state) => {
+      state.sortByTag = ""
+      state.searchValue = ""
+      state.sortByPopular = false
+    }
   },
 })
 
 
-export const { setSearchValue, setSortByTag, setSortByPopular } = filterSlice.actions
+export const { setSearchValue, setSortByTag, setSortByPopular, setDefaultSearchValues } = filterSlice.actions
 
 export default filterSlice.reducer

@@ -10,7 +10,7 @@ import { UserInfo } from '../UserInfo';
 import { useNavigate } from "react-router"
 import TextField from "@mui/material/TextField";
 import debounce from 'lodash.debounce'
-import { setSearchValue, setSortByTag, setSortByPopular  } from '../../redux/filters/slice'
+import { setSearchValue, setDefaultSearchValues  } from '../../redux/filters/slice'
 
 
 export const Header = () => {
@@ -42,10 +42,7 @@ export const Header = () => {
   };
 
   const onClickLogo = () => {
-    dispatch(setSearchValue(""))
-    dispatch(setSortByTag(""))
-    dispatch(setSortByPopular(false))
-    
+    dispatch(setDefaultSearchValues())
     naviagate("/")
   }
   return (
