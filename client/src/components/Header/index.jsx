@@ -1,20 +1,21 @@
-import React, { useState, useCallback } from 'react';
-import Button from '@mui/material/Button';
+import React, { useState, useCallback, useRef } from 'react';
+import { Button, IconButton, TextField, Container } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { Link } from "react-router-dom"
 import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
 import { selectAuth } from "../../redux/auth/selectors"
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/auth/slice";
 import { UserInfo } from '../UserInfo';
 import { useNavigate } from "react-router"
-import TextField from "@mui/material/TextField";
 import debounce from 'lodash.debounce'
-import { setSearchValue, setDefaultSearchValues  } from '../../redux/filters/slice'
+import { setSearchValue, setDefaultSearchValues } from '../../redux/filters/slice'
+
 
 
 export const Header = () => {
 
+  const searchRef = useRef(null)
   const [searchText, setSearchText] = useState("")
   const naviagate = useNavigate()
   const dispatch = useDispatch()
@@ -34,6 +35,7 @@ export const Header = () => {
   const clearSearchValue = () => {
     dispatch(setSearchValue(""))
     setSearchText("")
+    searchRef.current?.focus()
   }
 
   const onClickLogout = () => {
@@ -46,6 +48,7 @@ export const Header = () => {
     setSearchText("")
     naviagate("/")
   }
+
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
@@ -54,14 +57,29 @@ export const Header = () => {
             <div>ABOUT ME APP</div>
           </div>
           <div className={styles.searchField} >
-            <TextField onChange={(e) => onChangeInput(e.target.value)} value={searchText} className={styles.search} size="small" id="outlined-basic" label="Search..." variant="outlined" />
-            {searchText && <svg
-              className={styles.clearIcon}
-              onClick={() => clearSearchValue()}
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
-            </svg>}
+
+            <TextField onChange={(e) => onChangeInput(e.target.value)}
+              value={searchText}
+              className={styles.search}
+              size="small"
+              id="outlined-basic"
+              label="Search..."
+              variant="outlined"
+              inputRef={searchRef}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    sx={{ visibility: searchText ? "visible" : "hidden" }}
+                    onClick={clearSearchValue}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                ),
+              }}
+              sx={{
+                m: 2,
+                "& .Mui-focused .MuiIconButton-root": { color: "primary.main" },
+              }} />
           </div>
           <div className={styles.inner}>
             {isAuth && <UserInfo {...authorizedUser} />}
