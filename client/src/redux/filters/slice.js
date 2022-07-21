@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 
-
 const initialState= {
   searchValue: "",
   sortByTag: "",
   sortByPopular: 0,
+  currentPage: 1,
 }
 
 export const filterSlice = createSlice({
@@ -25,11 +25,15 @@ export const filterSlice = createSlice({
       state.sortByTag = ""
       state.searchValue = ""
       state.sortByPopular = 0
-    }
+      state.currentPage = 1
+    },
+    setCurrentPage:(state, action)=> {
+      state.currentPage = action.payload
+    },
   },
 })
 
 
-export const { setSearchValue, setSortByTag, setSortByPopular, setDefaultSearchValues } = filterSlice.actions
+export const { setSearchValue, setSortByTag, setSortByPopular, setDefaultSearchValues, setCurrentPage, setTotalPages } = filterSlice.actions
 
 export default filterSlice.reducer

@@ -6,7 +6,7 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts } from '../redux/posts/slice'
-import { setSortByPopular } from '../redux/filters/slice'
+import { setSortByPopular, setCurrentPage} from '../redux/filters/slice'
 import { fetchTags } from '../redux/tags/slice'
 import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,24 +17,25 @@ export const Home = () => {
 
   const dispatch = useDispatch()
 
-  const { posts } = useSelector(state => state.posts)
+  const { posts, totalPages } = useSelector(state => state.posts)
   const { tags } = useSelector(state => state.tags)
   const { allComments } = useSelector(state => state.comments)
   const { authorizedUser } = useSelector(state => state.auth)
-  const { searchValue, sortByTag, sortByPopular } = useSelector(state => state.filters)
+  const { searchValue, sortByTag, sortByPopular, currentPage } = useSelector(state => state.filters)
 
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
   const isCommentsLoading = allComments.status === "loading"
 
+  console.log(totalPages)
 
   useEffect(() => {
     try {
-      dispatch(fetchPosts({ searchValue, sortByTag, sortByPopular }))
+      dispatch(fetchPosts({ searchValue, sortByTag, sortByPopular, currentPage }))
     } catch (error) {
       console.log(error)
     }
-  }, [searchValue, sortByTag, sortByPopular])
+  }, [searchValue, sortByTag, sortByPopular, currentPage])
 
   useEffect(() => {
     try {
@@ -81,7 +82,7 @@ export const Home = () => {
             isLoading={isCommentsLoading}
           />
         </Grid>
-        <Pagination currentPage={"currentPage"} onClickPage={""} />
+        <Pagination currentPage={currentPage} totalPages={totalPages} onClickPage={(page) => dispatch(setCurrentPage(page))} />
       </Grid>
  
     </>

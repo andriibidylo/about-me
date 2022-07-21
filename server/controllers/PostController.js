@@ -6,7 +6,7 @@ export const getAllPosts = async (req, res) => {
     let { title, popular, tags, page, size } = req.query;
     const query = {}
 
-    const { limit, offset } = getPagination(page, size);
+    const { limit, offset } = getPagination(page-1, size);
 
     if (title) {
       query.title = { '$regex': title, $options: 'i' }

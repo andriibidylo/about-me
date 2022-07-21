@@ -3,27 +3,15 @@ import axios from "../../axios"
 
 
 export const fetchPosts = createAsyncThunk(
-  'posts/fetchPosts', async ({ searchValue, sortByTag, sortByPopular }) => {
+  'posts/fetchPosts', async ({ searchValue, sortByTag, sortByPopular, currentPage }) => {
     const title = searchValue ? `&title=${searchValue}` : ""
     const tags = sortByTag ? `&tags=${sortByTag}` : ""
-    const { data } = await axios.get(`/posts?popular=${Boolean(sortByPopular)}${title}${tags}`)
+    const { data } = await axios.get(`/posts?popular=${Boolean(sortByPopular)}${title}${tags}&page=${currentPage}`)
 
     return data
   }
 )
 
-export const fetchPostsByPopular = createAsyncThunk(
-  'posts/fetchPostsByPopular', async () => {
-    const { data } = await axios.get(`/posts/popular`)
-    return data
-  }
-)
-export const fetchPostsByTag = createAsyncThunk(
-  'posts/fetchPostsByTag', async (tag) => {
-    const { data } = await axios.get(`/posts/tags/${tag}`)
-    return data
-  }
-)
 export const removePost = createAsyncThunk(
   'posts/removePost', async (id) => {
     const { data } = await axios.delete(`/posts/${id}`)
@@ -36,8 +24,8 @@ const initialState = {
     items: [],
     status: "loading"
   },
+  totalPages: 1,
 }
-
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -50,41 +38,19 @@ export const postsSlice = createSlice({
       state.posts.items = []
     },
     [fetchPosts.fulfilled]: (state, action) => {
-      state.posts.items = action.payload
+      state.posts.items = action.payload.docs
+      state.totalPages = action.payload.totalPages
       state.posts.status = "success"
     },
     [fetchPosts.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
     },
-    [fetchPostsByPopular.pending]: (state) => {
-      state.posts.status = "loading"
-      state.posts.items = []
-    },
-    [fetchPostsByPopular.fulfilled]: (state, action) => {
-      state.posts.items = action.payload
-      state.posts.status = "success"
-    },
-    [fetchPostsByPopular.rejected]: (state) => {
-      state.posts.status = "error"
-      state.posts.items = []
-    },
-    [fetchPostsByTag.pending]: (state) => {
-      state.posts.status = "loading"
-      state.posts.items = []
-    },
-    [fetchPostsByTag.fulfilled]: (state, action) => {
-      state.posts.items = action.payload
-      state.posts.status = "success"
-    },
-    [fetchPostsByTag.rejected]: (state) => {
-      state.posts.status = "error"
-      state.posts.items = []
-    },
     [removePost.fulfilled]: (state, action) => {
       state.posts.items = state.posts.items.filter((item) => item._id !== action.meta.arg)
     },
+
   },
 })
-
+export const { setTotalPages } = postsSlice.actions
 export default postsSlice.reducer
