@@ -27,7 +27,6 @@ export const Search = ({ setSearchText, searchText }) => {
     searchRef.current?.focus()
   }
 
-
   return (
     <div className={styles.searchField} >
       <TextField onChange={(e) => onChangeInput(e.target.value)}

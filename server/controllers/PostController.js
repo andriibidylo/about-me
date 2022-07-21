@@ -1,9 +1,13 @@
 import PostModel from "../models/Post.js"
+import { getPagination } from "../utils/pagination.js"
 
 export const getAllPosts = async (req, res) => {
   try {
-    let { title, popular, tags } = req.query;
+    let { title, popular, tags, page, size } = req.query;
     const query = {}
+
+    const { limit, offset } = getPagination(page, size);
+
     if (title) {
       query.title = { '$regex': title, $options: 'i' }
     }
@@ -15,7 +19,8 @@ export const getAllPosts = async (req, res) => {
     } else {
       popular = { "createdAt": -1 }
     }
-    const post = await PostModel.find(query).sort(popular).populate("author").exec()
+
+    const post = await PostModel.paginate(query, { offset, limit, sort: popular, populate: 'author' })
     res.json(post)
 
   } catch (error) {
