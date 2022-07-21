@@ -6,12 +6,14 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts } from '../redux/posts/slice'
-import { setSortByPopular, setCurrentPage} from '../redux/filters/slice'
+import { setSortByPopular, setCurrentPage } from '../redux/filters/slice'
 import { fetchTags } from '../redux/tags/slice'
 import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDate, countCommentsForPost } from '../helpers'
 import { Pagination } from '../components/Pagination/index'
+import { NotFound } from '../components/NotFound/index'
+
 
 export const Home = () => {
 
@@ -73,6 +75,7 @@ export const Home = () => {
               isLoading={false}
             />
             ))}
+            {posts.items.length === 0 && < NotFound />}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
@@ -83,7 +86,7 @@ export const Home = () => {
         </Grid>
         <Pagination currentPage={currentPage} totalPages={totalPages} onClickPage={(page) => dispatch(setCurrentPage(page))} />
       </Grid>
- 
+
     </>
   );
 };

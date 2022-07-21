@@ -45,4 +45,23 @@
     justify-content: space-between;
   }
 }
+
+}
+@media (max-width: 906px) {
+  .root {
+    height: 200px;
+  }
+  .inner {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 600px;
+    align-items: center;
+  }
+  .buttons {
+    button {
+      margin-top: 10px;
+    }
+  }
+  
 }
