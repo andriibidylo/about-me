@@ -6,7 +6,7 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts } from '../redux/posts/slice'
-import { setSortByTag, setSortByPopular } from '../redux/filters/slice'
+import { setSortByPopular } from '../redux/filters/slice'
 import { fetchTags } from '../redux/tags/slice'
 import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,7 +26,7 @@ export const Home = () => {
   const isPostsLoading = posts.status === "loading"
   const isTagsLoading = tags.status === "loading"
   const isCommentsLoading = allComments.status === "loading"
-  const [buttonValue, setButtonValue] = useState(0)
+
 
   useEffect(() => {
     try {
@@ -45,19 +45,13 @@ export const Home = () => {
     }
   }, [])
 
-
   const toggleSortPosts = (value) => {
-    setButtonValue(value)
-    dispatch(setSortByPopular(Boolean(value)))
-  }
-
-  const clickOnTag = (tag) => {
-    dispatch(setSortByTag(tag))
+    dispatch(setSortByPopular(value))
   }
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={buttonValue} aria-label="basic tabs example">
+      <Tabs style={{ marginBottom: 15 }} value={sortByPopular} aria-label="basic tabs example">
         <Tab onClick={() => toggleSortPosts(0)} label="New" />
         <Tab onClick={() => toggleSortPosts(1)} label="Popular" />
       </Tabs>
@@ -81,7 +75,7 @@ export const Home = () => {
             ))}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock onClickOnTag={clickOnTag} items={tags.items} isLoading={isTagsLoading} />
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={allComments.items.slice(0, 5)}
             isLoading={isCommentsLoading}

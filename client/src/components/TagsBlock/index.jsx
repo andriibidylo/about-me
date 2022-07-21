@@ -6,17 +6,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import TagIcon from "@mui/icons-material/Tag";
 import ListItemText from "@mui/material/ListItemText";
 import Skeleton from "@mui/material/Skeleton";
-import { SideBlock } from "./SideBlock";
+import { SideBlock } from "../SideBlock";
+import styles from './TagsBlock.module.scss';
+import { setSortByTag } from '../../redux/filters/slice'
+import { useDispatch, useSelector } from 'react-redux'
 
 
-export const TagsBlock = ({ onClickOnTag, items, isLoading = true }) => {
+export const TagsBlock = ({ items, isLoading = true }) => {
+
+  const dispatch = useDispatch()
+  const { sortByTag } = useSelector(state => state.filters)
+
+
+  const clickOnTag = (tag) => {
+    let name = (tag === sortByTag) ? "" : tag
+    dispatch(setSortByTag(name))
+  }
+
   return (
     <SideBlock title="tags">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
-          <div onClick={() => onClickOnTag(name)} key={i}
-            style={{ textDecoration: "none", color: "black" }}
-          >
+          <div className={sortByTag === name ? styles.active : ""} onClick={() => clickOnTag(name)} key={i}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>

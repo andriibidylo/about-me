@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState= {
   searchValue: "",
   sortByTag: "",
-  sortByPopular: false,
+  sortByPopular: 0,
 }
 
 export const filterSlice = createSlice({
@@ -24,7 +24,7 @@ export const filterSlice = createSlice({
     setDefaultSearchValues: (state) => {
       state.sortByTag = ""
       state.searchValue = ""
-      state.sortByPopular = false
+      state.sortByPopular = 0
     }
   },
 })
