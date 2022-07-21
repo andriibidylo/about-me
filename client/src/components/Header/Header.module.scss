@@ -4,27 +4,7 @@
 
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
-.searchField {
-  width: 400px;
-  .clearIcon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.3;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    cursor: pointer;
 
-    &:hover {
-      opacity: 0.8;
-    }
-    
-  }
-  .search {
-    width: 400px;
-  }
-}
-  
 
 .inner {
   display: flex;
