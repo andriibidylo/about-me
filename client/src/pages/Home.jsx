@@ -11,7 +11,7 @@ import { fetchTags } from '../redux/tags/slice'
 import { fetchAllComments } from '../redux/comments/slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDate, countCommentsForPost } from '../helpers'
-
+import { Pagination } from '../components/Pagination/index'
 
 export const Home = () => {
 
@@ -81,7 +81,9 @@ export const Home = () => {
             isLoading={isCommentsLoading}
           />
         </Grid>
+        <Pagination currentPage={"currentPage"} onClickPage={""} />
       </Grid>
+ 
     </>
   );
 };
