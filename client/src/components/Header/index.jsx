@@ -43,6 +43,7 @@ export const Header = () => {
 
   const onClickLogo = () => {
     dispatch(setDefaultSearchValues())
+    setSearchText("")
     naviagate("/")
   }
   return (
