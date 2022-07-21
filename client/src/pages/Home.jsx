@@ -27,7 +27,6 @@ export const Home = () => {
   const isTagsLoading = tags.status === "loading"
   const isCommentsLoading = allComments.status === "loading"
 
-  console.log(totalPages)
 
   useEffect(() => {
     try {
@@ -35,7 +34,7 @@ export const Home = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [searchValue, sortByTag, sortByPopular, currentPage])
+  }, [searchValue, sortByTag, sortByPopular, currentPage, totalPages])
 
   useEffect(() => {
     try {

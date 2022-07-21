@@ -32,6 +32,7 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
   },
+  
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.posts.status = "loading"
@@ -52,5 +53,5 @@ export const postsSlice = createSlice({
 
   },
 })
-export const { setTotalPages } = postsSlice.actions
+
 export default postsSlice.reducer
