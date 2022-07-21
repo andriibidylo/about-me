@@ -1,21 +1,15 @@
 .root {
   background-color: #fff;
   padding: 10px 0;
-
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
-
-
 .inner {
   display: flex;
   justify-content: space-between;
   height: 40px;
   align-items: center;
 }
-
-
 .logo {
-
   color: #000000;
   font-weight: 900;
   line-height: 35px;
@@ -45,11 +39,11 @@
     justify-content: space-between;
   }
 }
-
 }
+
 @media (max-width: 906px) {
   .root {
-    height: 200px;
+    height: 210px;
   }
   .inner {
     display:flex;
@@ -63,5 +57,4 @@
       margin-top: 10px;
     }
   }
-  
 }
