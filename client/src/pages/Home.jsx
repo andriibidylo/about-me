@@ -30,7 +30,7 @@ export const Home = () => {
   const isTagsLoading = tags.status === "loading"
   const isCommentsLoading = allComments.status === "loading"
 
-  console.log(posts)
+
   useEffect(() => {
     try {
       dispatch(fetchPosts({ searchValue, sortByTag, sortByPopular, currentPage }))
