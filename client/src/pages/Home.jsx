@@ -19,6 +19,7 @@ export const Home = () => {
 
   const dispatch = useDispatch()
 
+
   const { posts, totalPages } = useSelector(state => state.posts)
   const { tags } = useSelector(state => state.tags)
   const { allComments } = useSelector(state => state.comments)
@@ -29,7 +30,7 @@ export const Home = () => {
   const isTagsLoading = tags.status === "loading"
   const isCommentsLoading = allComments.status === "loading"
 
-
+  console.log(posts)
   useEffect(() => {
     try {
       dispatch(fetchPosts({ searchValue, sortByTag, sortByPopular, currentPage }))
