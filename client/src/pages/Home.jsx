@@ -50,10 +50,6 @@ export const Home = () => {
   const toggleSortPosts = (value) => {
     dispatch(setSortByPopular(value))
   }
-  const countCommentsForPost = (post) => {
-    const filteredPosts = allComments.items.filter(el => el.post === post).length
-    return filteredPosts
-  }
 
   return (
     <>
