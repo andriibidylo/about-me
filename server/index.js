@@ -2,10 +2,11 @@ import express, { json } from "express"
 import { registerValidation, loginValidation } from "./validations/auth.js"
 import { createCommentValidation} from "./validations/comment.js"
 import mongoose from "mongoose"
+
 import checkAuth from "./utils/checkAuth.js"
 import { register, login, getMe } from "./controllers/UserController.js"
 import { createPostValidation } from "./validations/post.js"
-import { createPost, getAllPosts, getPopularPosts, getOnePost, removePost, updatePost, getTags, getPostsWithTag } from "./controllers/PostController.js"
+import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags } from "./controllers/PostController.js"
 import { createComment, getAllComments, getAllCommentsForPost, removeComment } from "./controllers/CommentController.js"
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
@@ -51,8 +52,6 @@ app.get("/auth/me", checkAuth, getMe)
 app.get("/tags", getTags)
 
 app.get("/posts", getAllPosts)
-app.get("/posts/popular", getPopularPosts)
-app.get("/posts/tags/:tag", getPostsWithTag)
 app.get("/posts/:id", getOnePost)
 app.post("/posts", checkAuth, createPostValidation, createPost)
 app.patch("/posts/:id", checkAuth, createPostValidation, updatePost)

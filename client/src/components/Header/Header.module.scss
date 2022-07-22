@@ -3,27 +3,26 @@
   padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
-}
-
 .inner {
   display: flex;
   justify-content: space-between;
+  height: 40px;
+  align-items: center;
 }
-
 .logo {
-  background-color: black;
-  color: #fff;
-  font-weight: 700;
+  color: #000000;
+  font-weight: 900;
   line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 0.15px;
+
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
   cursor: pointer;
-  
+
   &:hover {
-    background-color: #4361ee;
+    color: #a8aab4;
   }
 }
 
@@ -35,8 +34,27 @@
   a {
     text-decoration: none;
   }
-  .rightBlock{
+  .rightBlock {
     display: flex;
     justify-content: space-between;
+  }
+}
+}
+
+@media (max-width: 906px) {
+  .root {
+    height: 210px;
+  }
+  .inner {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 600px;
+    align-items: center;
+  }
+  .buttons {
+    button {
+      margin-top: 10px;
+    }
   }
 }

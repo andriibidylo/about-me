@@ -37,7 +37,7 @@ export const Post = ({
   if (isLoading) {
     return <PostSkeleton />;
   }
-  
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isPostDetails })}>
       {isAuthor && (
@@ -53,7 +53,7 @@ export const Post = ({
         </div>
       )}
       {imageUrl && (
-        <Link to={`/posts/${id}`}> <img
+        <Link to={`/posts/${id}`}><img
           className={clsx(styles.image, { [styles.imageFull]: isPostDetails })}
           src={imageUrl}
           alt={title}

@@ -1,40 +1,34 @@
 import PostModel from "../models/Post.js"
+import { getPagination } from "../utils/pagination.js"
 
 export const getAllPosts = async (req, res) => {
   try {
-    const post = await PostModel.find().sort({"createdAt":-1}).populate("author").exec()
+    let { title, popular, tags, page, size } = req.query;
+    const query = {}
+
+    const { limit, offset } = getPagination(page-1, size);
+
+    if (title) {
+      query.title = { '$regex': title, $options: 'i' }
+    }
+    if (tags) {
+      query.tags = { '$regex': tags, $options: 'i' }
+    }
+    if (popular === "true") {
+      popular = { "viewsCount": -1 }
+    } else {
+      popular = { "createdAt": -1 }
+    }
+
+    const post = await PostModel.paginate(query, { offset, limit, sort: popular, populate: 'author' })
     res.json(post)
 
   } catch (error) {
     console.log(error)
     res.status(500)
-    res.json({ message: "Could not show all posts" })
+    res.json({ message: "Could not show posts" })
   }
 }
-export const getPopularPosts = async (req, res) => {
-  try {
-    const post = await PostModel.find().sort({"viewsCount":-1}).populate("author").exec()
-    res.json(post)
-
-  } catch (error) {
-    console.log(error)
-    res.status(500)
-    res.json({ message: "Could not show all posts" })
-  }
-}
-
-export const getPostsWithTag = async (req, res) => {
-  try {
-    const post = await PostModel.find({"tags":req.params.tag}).sort({"createdAt":-1}).populate("author").exec()
-    res.json(post)
-
-  } catch (error) {
-    console.log(error)
-    res.status(500)
-    res.json({ message: "Could not show all posts" })
-  }
-}
-
 export const getOnePost = async (req, res) => {
   try {
     const postId = req.params.id;

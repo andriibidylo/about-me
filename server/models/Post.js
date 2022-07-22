@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import mongoosePaginate from "mongoose-paginate-v2"
+
 
 const PostSchema = new mongoose.Schema({
   title: {
@@ -27,6 +29,6 @@ const PostSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 },
-)
+).plugin(mongoosePaginate);
 
 export default mongoose.model("Post ", PostSchema)
