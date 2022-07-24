@@ -51,6 +51,7 @@ export const Home = () => {
     dispatch(setSortByPopular(value))
   }
 
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={sortByPopular} aria-label="basic tabs example">
@@ -70,6 +71,7 @@ export const Home = () => {
               createdAt={formatDate(post.createdAt)}
               viewsCount={post.viewsCount}
               commentsCount={countCommentsForPost(post._id, allComments)}
+              isLiked = {post.isLiked}
               tags={post.tags}
               isAuthor={authorizedUser?._id === post.author._id}
               isLoading={false}

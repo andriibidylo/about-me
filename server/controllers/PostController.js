@@ -122,7 +122,7 @@ export const removePost = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     const postId = req.params.id;
-
+      console.log("BODY",req.body)
     await PostModel.updateOne(
       {
         _id: postId,
@@ -139,6 +139,25 @@ export const updatePost = async (req, res) => {
     res.json({
       success: true,
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Post did not update',
+    });
+  }
+}
+export const toggleLikePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    let data = await PostModel.findOneAndUpdate(
+      {
+        _id: postId,
+      },
+      [
+        { $set: { isLiked: { $not: "$isLiked" } } }
+      ],
+    );
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(500).json({

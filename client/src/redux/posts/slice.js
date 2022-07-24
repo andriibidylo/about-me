@@ -19,6 +19,12 @@ export const removePost = createAsyncThunk(
   }
 )
 
+export const changeLikeOnPost = createAsyncThunk(
+  "posts/changeLikeOnPost", async (id)=>{
+  const { data } = await axios.patch(`/posts/like/${id}`)
+  return data
+})
+
 const initialState = {
   posts: {
     items: [],
@@ -44,6 +50,10 @@ export const postsSlice = createSlice({
       state.posts.status = "success"
     },
     [fetchPosts.rejected]: (state) => {
+      state.posts.status = "error"
+      state.posts.items = []
+    },
+    [changeLikeOnPost.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
     },

@@ -1,16 +1,18 @@
-import React from 'react';
+import React,{useState} from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Link } from "react-router-dom"
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { useDispatch } from 'react-redux'
-import { removePost } from '../../redux/posts/slice'
+import { removePost, changeLikeOnPost } from '../../redux/posts/slice'
 
 
 export const Post = ({
@@ -25,14 +27,22 @@ export const Post = ({
   children,
   isPostDetails,
   isLoading,
+  isLiked,
   isAuthor,
 }) => {
 
-  const dispatch = useDispatch()
 
+  const [liked, setLiked] = useState(isLiked)
+
+  const dispatch = useDispatch()
   const onClickRemove = (id) => {
     dispatch(removePost(id))
   };
+
+  const onClickLike = (id) => {
+    dispatch(changeLikeOnPost(id))
+    setLiked(!liked)
+  }
 
   if (isLoading) {
     return <PostSkeleton />;
@@ -82,6 +92,9 @@ export const Post = ({
             <li>
               <CommentIcon />
               <span>{commentsCount}</span>
+            </li>
+            <li onClick ={() => onClickLike(id)}>
+              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </li>
           </ul>
         </div>

@@ -67,6 +67,7 @@ export const PostDetails = () => {
         commentsCount={comment.length}
         tags={post.tags}
         isPostDetails
+        isLiked={post.isLiked}
       >
         <ReactMarkdown children={post.text} />
       </Post>
