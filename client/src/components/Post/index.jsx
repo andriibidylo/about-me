@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -12,7 +12,8 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { useDispatch } from 'react-redux'
-import { removePost, changeLikeOnPost } from '../../redux/posts/slice'
+import { removePost, addLike, removeLike } from '../../redux/posts/slice'
+import { useSelector } from 'react-redux'
 
 
 export const Post = ({
@@ -29,23 +30,35 @@ export const Post = ({
   isLoading,
   isLiked,
   isAuthor,
+  likesCount,
 }) => {
 
 
-  const [liked, setLiked] = useState(isLiked)
+  const [like, setLike] = useState(isLiked)
+  const [likeCount, setLikeCount] = useState(likesCount)
+  const { authorizedUser } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
+
   const onClickRemove = (id) => {
     dispatch(removePost(id))
   };
 
-  const onClickLike = (id) => {
-    dispatch(changeLikeOnPost(id))
-    setLiked(!liked)
+  const onClickLike = (postId) => {
+    if (authorizedUser) {
+      if (like) {
+        dispatch(removeLike(postId))
+        setLikeCount(likeCount - 1)
+      } else {
+        dispatch(addLike(postId))
+        setLikeCount(likeCount + 1)
+      }
+      setLike(!like)
+    }
   }
 
   if (isLoading) {
-    return <PostSkeleton />;
+    return <PostSkeleton />
   }
 
   return (
@@ -93,8 +106,9 @@ export const Post = ({
               <CommentIcon />
               <span>{commentsCount}</span>
             </li>
-            <li onClick ={() => onClickLike(id)}>
-              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            <li className = {styles.favariteButton} onClick={() => onClickLike(id)}>
+              {like ? <FavoriteIcon/> : <FavoriteBorderIcon />}
+              <span>{likeCount}</span>
             </li>
           </ul>
         </div>

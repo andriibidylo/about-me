@@ -1,17 +1,18 @@
 import express, { json } from "express"
-import { registerValidation, loginValidation } from "./validations/auth.js"
-import { createCommentValidation} from "./validations/comment.js"
 import mongoose from "mongoose"
-
-import checkAuth from "./utils/checkAuth.js"
-import { register, login, getMe } from "./controllers/UserController.js"
-import { createPostValidation } from "./validations/post.js"
-import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags, toggleLikePost } from "./controllers/PostController.js"
-import { createComment, getAllComments, getAllCommentsForPost, removeComment } from "./controllers/CommentController.js"
 import multer from "multer"
 import handleValidationErrors from "./utils/handleValidationErrors.js"
 import cors from "cors"
 import fs from 'fs';
+import { registerValidation, loginValidation } from "./validations/auth.js"
+import { createCommentValidation} from "./validations/comment.js"
+import checkAuth from "./utils/checkAuth.js"
+import { register, login, getMe } from "./controllers/UserController.js"
+import { createPostValidation } from "./validations/post.js"
+import { addLike, removeLike } from "./controllers/LikeController.js"
+import { createPost, getAllPosts, getOnePost, removePost, updatePost, getTags } from "./controllers/PostController.js"
+import { createComment, getAllComments, getAllCommentsForPost, removeComment } from "./controllers/CommentController.js"
+
 
 const app = express()
 
@@ -55,8 +56,10 @@ app.get("/posts", getAllPosts)
 app.get("/posts/:id", getOnePost)
 app.post("/posts", checkAuth, createPostValidation, createPost)
 app.patch("/posts/:id", checkAuth, createPostValidation, updatePost)
-app.patch("/posts/like/:id", toggleLikePost)
 app.delete("/posts/:id", checkAuth, removePost)
+
+app.post("/posts/:id/like", checkAuth, addLike)
+app.delete("/posts/:id/like", checkAuth, removeLike)
 
 app.get("/comments", getAllComments)
 app.get("/posts/:id/comments", getAllCommentsForPost)

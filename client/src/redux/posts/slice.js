@@ -19,9 +19,14 @@ export const removePost = createAsyncThunk(
   }
 )
 
-export const changeLikeOnPost = createAsyncThunk(
-  "posts/changeLikeOnPost", async (id)=>{
-  const { data } = await axios.patch(`/posts/like/${id}`)
+export const addLike = createAsyncThunk(
+  "posts/addLike", async (id)=>{
+  const { data } = await axios.post(`/posts/${id}/like`)
+  return data
+})
+export const removeLike = createAsyncThunk(
+  "posts/removeLike", async (id)=>{
+  const { data } = await axios.delete(`/posts/${id}/like`)
   return data
 })
 
@@ -53,7 +58,11 @@ export const postsSlice = createSlice({
       state.posts.status = "error"
       state.posts.items = []
     },
-    [changeLikeOnPost.rejected]: (state) => {
+    [addLike.rejected]: (state) => {
+      state.posts.status = "error"
+      state.posts.items = []
+    },
+    [removeLike.rejected]: (state) => {
       state.posts.status = "error"
       state.posts.items = []
     },

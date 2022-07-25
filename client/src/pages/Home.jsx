@@ -51,7 +51,6 @@ export const Home = () => {
     dispatch(setSortByPopular(value))
   }
 
-
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={sortByPopular} aria-label="basic tabs example">
@@ -61,7 +60,7 @@ export const Home = () => {
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((post, index) => isPostsLoading ?
-            (<Post key={index} isLoading={true} />) :
+            (<Post key={index} isLoading={isPostsLoading}/>) :
             (<Post
               key={post._id}
               id={post._id}
@@ -71,9 +70,10 @@ export const Home = () => {
               createdAt={formatDate(post.createdAt)}
               viewsCount={post.viewsCount}
               commentsCount={countCommentsForPost(post._id, allComments)}
-              isLiked = {post.isLiked}
-              tags={post.tags}
+              likesCount = {post.likesCount}
+              isLiked={post.likes.some(like => like.userId === authorizedUser?._id)}
               isAuthor={authorizedUser?._id === post.author._id}
+              tags={post.tags}
               isLoading={false}
             />
             ))}

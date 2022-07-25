@@ -146,25 +146,6 @@ export const updatePost = async (req, res) => {
     });
   }
 }
-export const toggleLikePost = async (req, res) => {
-  try {
-    const postId = req.params.id;
-    let data = await PostModel.findOneAndUpdate(
-      {
-        _id: postId,
-      },
-      [
-        { $set: { isLiked: { $not: "$isLiked" } } }
-      ],
-    );
-    res.json(data);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: 'Post did not update',
-    });
-  }
-}
 export const getTags = async (req, res) => {
   try {
     const post = await PostModel.find().limit(5).exec()

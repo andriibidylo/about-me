@@ -11,6 +11,7 @@ import { formatDate } from '../helpers'
 
 export const PostDetails = () => {
 
+  const { authorizedUser } = useSelector(state => state.auth)
   const { allComments } = useSelector(state => state.comments)
 
   const [post, setPost] = useState()
@@ -28,7 +29,6 @@ export const PostDetails = () => {
         setComment(comment)
         setPost(post)
         setIsLoading(false)
-
       } catch (error) {
         console.log(error)
       }
@@ -67,7 +67,9 @@ export const PostDetails = () => {
         commentsCount={comment.length}
         tags={post.tags}
         isPostDetails
-        isLiked={post.isLiked}
+        likesCount = {post.likesCount}
+        isLiked={post.likes?.some(like => like.userId === authorizedUser?._id)}
+        isAuthor={authorizedUser?._id === post.author._id}
       >
         <ReactMarkdown children={post.text} />
       </Post>

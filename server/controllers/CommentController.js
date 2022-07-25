@@ -26,6 +26,7 @@ export const getAllComments = async (req, res) => {
 
 export const createComment = async (req, res) => {
   try {
+    console.log(req.userId)
     const doc = new CommentModel({
       text: req.body.text,
       author: req.userId,
