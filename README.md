@@ -14,7 +14,8 @@ User can:
 8. See number of likes;
 9. Add/remove likes;
 10. Sort posts by popular;
-11. See posts with particular tags.
+11. See posts with particular tag;
+12. Search posts by title.
 
 
 ## Final Product
