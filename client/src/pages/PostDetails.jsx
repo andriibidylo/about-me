@@ -67,8 +67,9 @@ export const PostDetails = () => {
         commentsCount={comment.length}
         tags={post.tags}
         isPostDetails
-        likesCount = {post.likesCount}
-        isLiked={post.likes?.some(like => like.userId === authorizedUser?._id)}
+        isLoading={isLoading}
+        likesCount={post.likesCount}
+        isLiked={post.likes.some(like => like.userId === authorizedUser?._id)}
         isAuthor={authorizedUser?._id === post.author._id}
       >
         <ReactMarkdown children={post.text} />

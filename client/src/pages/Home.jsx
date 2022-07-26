@@ -36,7 +36,7 @@ export const Home = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [searchValue, sortByTag, sortByPopular, currentPage, totalPages])
+  }, [searchValue, sortByTag, sortByPopular, currentPage])
 
   useEffect(() => {
     try {

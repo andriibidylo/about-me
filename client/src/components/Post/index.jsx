@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -33,12 +33,18 @@ export const Post = ({
   likesCount,
 }) => {
 
-
-  const [like, setLike] = useState(isLiked)
-  const [likeCount, setLikeCount] = useState(likesCount)
+  const dispatch = useDispatch()
+  const isFetchedPost = useRef(false)
   const { authorizedUser } = useSelector(state => state.auth)
 
-  const dispatch = useDispatch()
+  const [like, setLike] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
+
+  if (likesCount && !isFetchedPost.current) {
+    setLikeCount(likesCount)
+    setLike(isLiked)
+    isFetchedPost.current = true
+  }
 
   const onClickRemove = (id) => {
     dispatch(removePost(id))
@@ -56,6 +62,7 @@ export const Post = ({
       setLike(!like)
     }
   }
+
 
   if (isLoading) {
     return <PostSkeleton />
@@ -106,8 +113,8 @@ export const Post = ({
               <CommentIcon />
               <span>{commentsCount}</span>
             </li>
-            <li className = {styles.favariteButton} onClick={() => onClickLike(id)}>
-              {like ? <FavoriteIcon/> : <FavoriteBorderIcon />}
+            <li className={styles.favariteButton} onClick={() => onClickLike(id)}>
+              {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               <span>{likeCount}</span>
             </li>
           </ul>

@@ -58,7 +58,7 @@ export const getOnePost = async (req, res) => {
 
         res.json(doc);
       },
-    ).populate('author');
+    ).populate(['likes','author', 'likesCount']);
   } catch (err) {
     console.log(err);
     res.status(500).json({
