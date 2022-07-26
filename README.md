@@ -6,13 +6,15 @@ User can:
 
 1. Create an accaunt;
 2. Log in / Log out;
-3. Add posts (title, image, tags, taxt);
+3. Add posts (title, image, tags, text);
 4. Edit/Remove posts;
-5. Comment posts;
-6. Remove comment;
-7. See number of views;
-8. Sort posts by popular;
-9. See posts with particular tags.
+5. See number of views;
+6. Comment posts;
+7. Remove comment; 
+8. See number of likes;
+9. Add/remove likes;
+10. Sort posts by popular;
+11. See posts with particular tags.
 
 
 ## Final Product
