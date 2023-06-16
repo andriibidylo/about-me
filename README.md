@@ -1,6 +1,6 @@
 # About me app
 
-About-me this is a blog applaction. Client: React.js (Hooks: useEffect, useState, useMemo, useRef, useCallback ), JavaScript, Redux-toolkit, React Router(Hooks: useParams, useNavigate, Navigate), AJAX, Material-UI. Server: Node.js, Express, Mongoos, JWT. DB: MongoDB. 
+About-me is a blog application. Client: React.js (Hooks: useEffect, useState, useMemo, useRef, useCallback ), JavaScript, Redux-toolkit, React Router(Hooks: useParams, useNavigate, Navigate), AJAX, Material-UI. Server: Node.js, Express, Mongoos, JWT. DB: MongoDB. 
 
 User can:
 
